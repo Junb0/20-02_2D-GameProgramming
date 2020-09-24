@@ -8,9 +8,9 @@ winAPI 기반으로 제작했던 게임이었는데, api특성과 짧은 개발�
 
 **게임 스크린샷**
 
-![1](C:\edu\KPU 20-2\2D게임프로그래밍\git과제\20-02_2D-GameProgramming\TermProject\README img\1.PNG)
+![1](https://user-images.githubusercontent.com/56647868/94181878-1281a280-fedb-11ea-96e6-ce88dc7ace2e.PNG)
 
-![2](C:\edu\KPU 20-2\2D게임프로그래밍\git과제\20-02_2D-GameProgramming\TermProject\README img\2.PNG)
+![2](https://user-images.githubusercontent.com/56647868/94181904-1d3c3780-fedb-11ea-80ec-9d71577a1d88.PNG)
 
 **게임 목적 및 방법**
 
@@ -164,7 +164,7 @@ winAPI 기반으로 제작했던 게임이었는데, api특성과 짧은 개발�
 
 ### State간 이동 다이어그램
 
-![3](C:\edu\KPU 20-2\2D게임프로그래밍\git과제\20-02_2D-GameProgramming\TermProject\README img\3.PNG)
+![3](https://user-images.githubusercontent.com/56647868/94181924-275e3600-fedb-11ea-9c3d-272d7b726df7.PNG)
 
 # 4. 필요한 기술
 
