@@ -5,6 +5,7 @@ from pico2d import *
 class Body:
     ACTIONS = ['die', 'hit', 'idle', 'moveback', 'movefront']
     images = {}
+    FPS = 12
 
     def __init__(self):
         self.pos = (get_canvas_width() // 2, get_canvas_height() // 2)
@@ -43,8 +44,13 @@ class Body:
         print('%d images loaded for %s' % (count, char))
         return images
 
+    def do_idle(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Body.FPS)
+
     def update(self):
-        pass
+        if self.action == 'idle':
+            Body.do_idle(self)
 
     def draw(self):
         images = self.images[self.action]
