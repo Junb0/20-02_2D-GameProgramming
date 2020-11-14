@@ -1,6 +1,8 @@
 import gfw
 from pico2d import *
 import gobj
+from background import Background
+
 
 canvas_width = 1280
 canvas_height = 720
@@ -10,6 +12,8 @@ def enter():
 
 def update():
     gfw.world.update()
+    bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
+    gfw.world.add(gfw.layer.bg, bg)
 
 def draw():
     gfw.world.draw()
