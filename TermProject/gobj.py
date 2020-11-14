@@ -3,6 +3,7 @@ from pico2d import *
 import gfw
 
 RES_DIR = 'res'
+PIXEL_SCOPE = 4
 
 def res(file):
     return RES_DIR + '/' + file
