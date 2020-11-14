@@ -3,7 +3,7 @@ import gfw
 from pico2d import *
 
 class Body:
-    ACTIONS = [('DIE', 'die'), ('HIT', 'hit'), ('Idle', 'idle'), ('move_back', 'moveback'), ('move_front', 'movefront')]
+    ACTIONS = ['die', 'hit', 'idle', 'moveback', 'movefront']
     images = {}
 
     def __init__(self):
@@ -11,7 +11,7 @@ class Body:
         self.delta = 0
         self.char = 'hana'
         self.images = Body.load_images(self.char)
-        self.action = 'Idle'
+        self.action = 'idle'
         self.speed = 100
         self.fidx = 0
         self.time = 0
@@ -27,18 +27,18 @@ class Body:
         images = {}
         count = 0
         file_fmt = '%s/Sprites/actors/%s/%s/spr_chr_hna_%s%d.png'
-        for action_c, action_s in Body.ACTIONS:
+        for action in Body.ACTIONS:
             action_images = []
             n = 0
             while True:
                 n += 1
-                fn = file_fmt % (gobj.RES_DIR, char, action_c, action_s, n)
+                fn = file_fmt % (gobj.RES_DIR, char, action, action, n)
                 if os.path.isfile(fn):
                     action_images.append((gfw.image.load(fn)))
                 else:
                     break
                 count += 1
-            images[action_c] = action_images
+            images[action] = action_images
         Body.images[char] = images
         print('%d images loaded for %s' % (count, char))
         return images
