@@ -25,9 +25,10 @@ class Body:
         self.file_fmt = '%s/Sprites/actors/%s/%s/spr_chr_hna_%s%d.png'
         self.images = Body.load_images(self.char, self.file_fmt)
         self.action = 'idle'
-        self.speed = 100
+        self.speed = 300
         self.fidx = 0
         self.time = 0
+        self.mag = 1
 
     @staticmethod
     def load_all_images():
@@ -63,6 +64,12 @@ class Body:
     def do_move(self):
         self.time += gfw.delta_time
         self.fidx = round(self.time * Body.FPS)
+        x,y = self.pos
+        dx,dy = self.delta
+        x += dx * self.speed * self.mag * gfw.delta_time
+        y += dy * self.speed * self.mag * gfw.delta_time
+
+        self.pos = x, y
 
     def update(self):
         if self.action == 'idle':
@@ -73,11 +80,11 @@ class Body:
     def handle_event(self, e):
         pair = (e.type, e.key)
         if pair in Body.KEY_MAP:
-            pdx = self.delta[0]
             self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
             dx = self.delta[0]
+            dy = self.delta[1]
             self.action = \
-                'movefront' if dx > 0 else \
+                'movefront' if dx > 0 or dy != 0 else \
                 'moveback' if dx < 0 else \
                 'idle'
 
@@ -132,11 +139,11 @@ class Weapon(Body):
     def handle_event(self, e):
         pair = (e.type, e.key)
         if pair in Body.KEY_MAP:
-            pdx = self.delta[0]
             self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
             dx = self.delta[0]
+            dy = self.delta[1]
             self.action = \
-                'walk' if dx != 0 else \
+                'walk' if dx != 0 or dy != 0 else \
                 'idle'
 
 class Player:
