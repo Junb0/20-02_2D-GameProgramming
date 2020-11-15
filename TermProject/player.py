@@ -134,11 +134,11 @@ class Weapon(Body):
         print('%d images loaded for %s' % (count, char))
         return images
 
-    def update(self):
-        if self.action == 'idle':
+    def update(self, pos, fidx):
+        if self.action == 'idle' or self.action == 'walk':
             Weapon.do_idle(self)
-        if self.action == 'walk':
-            Weapon.do_move(self)
+        self.pos = pos
+        self.fidx = fidx
 
     def handle_event(self, e):
         pair = (e.type, e.key)
@@ -157,7 +157,7 @@ class Player:
 
     def update(self):
         self.body.update()
-        self.weapon.update()
+        self.weapon.update(self.body.pos, self.body.fidx)
 
     def draw(self):
         self.body.draw()
