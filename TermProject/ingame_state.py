@@ -26,11 +26,14 @@ def draw():
     # gobj.draw_collision_box()
 
 def handle_event(e):
+    global player
     if e.type == SDL_QUIT:
         gfw.quit()
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
             gfw.pop()
+
+    player.handle_event(e)
 
 def exit():
     pass

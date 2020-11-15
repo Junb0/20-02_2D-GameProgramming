@@ -3,13 +3,23 @@ import gfw
 from pico2d import *
 
 class Body:
+    KEY_MAP = {
+        (SDL_KEYDOWN, SDLK_LEFT): (-1, 0),
+        (SDL_KEYDOWN, SDLK_RIGHT): (1, 0),
+        (SDL_KEYDOWN, SDLK_DOWN): (0, -1),
+        (SDL_KEYDOWN, SDLK_UP): (0, 1),
+        (SDL_KEYUP, SDLK_LEFT): (1, 0),
+        (SDL_KEYUP, SDLK_RIGHT): (-1, 0),
+        (SDL_KEYUP, SDLK_DOWN): (0, 1),
+        (SDL_KEYUP, SDLK_UP): (0, -1),
+    }
     ACTIONS = ['die', 'hit', 'idle', 'moveback', 'movefront']
     images = {}
     FPS = 12
 
     def __init__(self):
         self.pos = (get_canvas_width() // 2, get_canvas_height() // 2)
-        self.delta = 0
+        self.delta = 0, 0
         self.char = 'hana'
         self.file_fmt = '%s/Sprites/actors/%s/%s/spr_chr_hna_%s%d.png'
         self.images = Body.load_images(self.char, self.file_fmt)
@@ -48,9 +58,26 @@ class Body:
         self.time += gfw.delta_time
         self.fidx = round(self.time * Body.FPS)
 
+    def do_move(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Body.FPS)
+
     def update(self):
         if self.action == 'idle':
             Body.do_idle(self)
+        if self.action == 'movefront' or self.action == 'moveback':
+            Body.do_move(self)
+
+    def handle_event(self, e):
+        pair = (e.type, e.key)
+        if pair in Body.KEY_MAP:
+            pdx = self.delta[0]
+            self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
+            dx = self.delta[0]
+            self.action = \
+                'movefront' if dx < 0 else \
+                'moveback' if dx > 0 else \
+                'idle'
 
     def draw(self):
         images = self.images[self.action]
@@ -84,6 +111,9 @@ class Player:
     def draw(self):
         self.body.draw()
         self.weapon.draw()
+
+    def handle_event(self, e):
+        self.body.handle_event(e)
 
     @staticmethod
     def load_all_images():
