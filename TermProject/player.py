@@ -66,8 +66,13 @@ class Body:
         self.fidx = round(self.time * Body.FPS)
         x,y = self.pos
         dx,dy = self.delta
-        x += dx * self.speed * self.mag * gfw.delta_time
-        y += dy * self.speed * self.mag * gfw.delta_time
+        uniform = 1
+        if dx != 0 and dy != 0:
+            uniform = 2 ** 0.5
+        print(uniform)
+
+        x += dx * self.speed * self.mag * gfw.delta_time / uniform
+        y += dy * self.speed * self.mag * gfw.delta_time / uniform
 
         self.pos = x, y
 
