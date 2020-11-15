@@ -11,7 +11,8 @@ class Body:
         self.pos = (get_canvas_width() // 2, get_canvas_height() // 2)
         self.delta = 0
         self.char = 'hana'
-        self.images = Body.load_images(self.char)
+        self.file_fmt = '%s/Sprites/actors/%s/%s/spr_chr_hna_%s%d.png'
+        self.images = Body.load_images(self.char, self.file_fmt)
         self.action = 'idle'
         self.speed = 100
         self.fidx = 0
@@ -19,15 +20,14 @@ class Body:
 
     @staticmethod
     def load_all_images():
-        Body.load_images('hana')
+        Body.load_images('hana', '%s/Sprites/actors/%s/%s/spr_chr_hna_%s%d.png')
 
     @staticmethod
-    def load_images(char):
+    def load_images(char, file_fmt):
         if char in Body.images:
             return Body.images[char]
         images = {}
         count = 0
-        file_fmt = '%s/Sprites/actors/%s/%s/spr_chr_hna_%s%d.png'
         for action in Body.ACTIONS:
             action_images = []
             n = 0
@@ -57,17 +57,35 @@ class Body:
         image = images[self.fidx % len(images)]
         image.composite_draw(0, '', *self.pos, image.w * gobj.PIXEL_SCOPE, image.h * gobj.PIXEL_SCOPE)
 
+class Weapon(Body):
+    ACTIONS = ['fire', 'idle', 'reload', 'walk']
+
+    def __init__(self):
+        super().__init__()
+        self.delay = 0.5
+        self.file_fmt = '%s/Sprites/weapons/%s/%s/spr_wpn_type89_%s%d.png'
+        self.char = 'Assault Rifle'
+        self.images = Weapon.load_images(self.char, self.file_fmt)
+
+    @staticmethod
+    def load_all_images():
+        Weapon.load_images('Assault Rifle', '%s/Sprites/weapons/%s/%s/spr_wpn_type89_%s%d.png')
+
 
 class Player:
     def __init__(self):
         self.body = Body()
+        self.weapon = Weapon()
 
     def update(self):
         self.body.update()
+        self.weapon.update()
 
     def draw(self):
         self.body.draw()
+        self.weapon.draw()
 
     @staticmethod
     def load_all_images():
         Body.load_all_images()
+        Weapon.load_all_images()
