@@ -17,6 +17,7 @@ class Body:
     images = {}
     FPS = 12
 
+
     def __init__(self):
         self.pos = (get_canvas_width() // 2, get_canvas_height() // 2)
         self.delta = 0, 0
@@ -38,6 +39,7 @@ class Body:
             return Body.images[char]
         images = {}
         count = 0
+
         for action in Body.ACTIONS:
             action_images = []
             n = 0
@@ -75,8 +77,8 @@ class Body:
             self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
             dx = self.delta[0]
             self.action = \
-                'movefront' if dx < 0 else \
-                'moveback' if dx > 0 else \
+                'movefront' if dx > 0 else \
+                'moveback' if dx < 0 else \
                 'idle'
 
     def draw(self):
@@ -98,6 +100,44 @@ class Weapon(Body):
     def load_all_images():
         Weapon.load_images('Assault Rifle', '%s/Sprites/weapons/%s/%s/spr_wpn_type89_%s%d.png')
 
+    @staticmethod
+    def load_images(char, file_fmt):
+        if char in Weapon.images:
+            return Weapon.images[char]
+        images = {}
+        count = 0
+
+        for action in Weapon.ACTIONS:
+            action_images = []
+            n = 0
+            while True:
+                n += 1
+                fn = file_fmt % (gobj.RES_DIR, char, action, action, n)
+                if os.path.isfile(fn):
+                    action_images.append((gfw.image.load(fn)))
+                else:
+                    break
+                count += 1
+            images[action] = action_images
+        Body.images[char] = images
+        print('%d images loaded for %s' % (count, char))
+        return images
+
+    def update(self):
+        if self.action == 'idle':
+            Weapon.do_idle(self)
+        if self.action == 'walk':
+            Weapon.do_move(self)
+
+    def handle_event(self, e):
+        pair = (e.type, e.key)
+        if pair in Body.KEY_MAP:
+            pdx = self.delta[0]
+            self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
+            dx = self.delta[0]
+            self.action = \
+                'walk' if dx != 0 else \
+                'idle'
 
 class Player:
     def __init__(self):
@@ -114,6 +154,7 @@ class Player:
 
     def handle_event(self, e):
         self.body.handle_event(e)
+        self.weapon.handle_event(e)
 
     @staticmethod
     def load_all_images():
