@@ -69,7 +69,6 @@ class Body:
         uniform = 1
         if dx != 0 and dy != 0:
             uniform = 2 ** 0.5
-        print(uniform)
 
         x += dx * self.speed * self.mag * gfw.delta_time / uniform
         y += dy * self.speed * self.mag * gfw.delta_time / uniform
