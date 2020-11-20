@@ -170,7 +170,7 @@ class Weapon(Body):
             self.reload_time = 0
             self.ammo = self.max_ammo
     def generate_bullet(self):
-        pos = self.pos[0], self.pos[1]
+        pos = self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
         blt = LongBullet(pos, self.damage)
         gfw.world.add(gfw.layer.bullet, blt)
 
