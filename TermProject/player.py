@@ -100,7 +100,9 @@ class Body:
 class Weapon(Body):
     KEY_MAP = {
         (SDL_KEYDOWN, SDLK_z): (1, 0),
-        (SDL_KEYUP, SDLK_z): (-1, 0)
+        (SDL_KEYUP, SDLK_z): (-1, 0),
+        (SDL_KEYDOWN, SDLK_x): (0, 1),
+        (SDL_KEYUP, SDLK_x): (0, -1)
     }
 
     ACTIONS = ['fire', 'idle', 'reload', 'walk']
@@ -108,16 +110,19 @@ class Weapon(Body):
     def __init__(self):
         super().__init__()
         self.fire_delay = 0.5
+        self.reload_delay = 1.0
         self.file_fmt = '%s/Sprites/weapons/%s/%s/spr_wpn_type89_%s%d.png'
         self.char = 'Assault Rifle'
         self.images = Weapon.load_images(self.char, self.file_fmt)
         self.fire_time = 0
+        self.reload_time = 0
         self.state = 0, 0
         self.on_fire = 0
         self.on_reload = 0
         self.dx = 0
         self.dy = 0
         self.fire_cool_time = 0
+        self.reload_cool_time = 0
         self.ammo = 5
         self.max_ammo = 5
 
@@ -155,8 +160,23 @@ class Weapon(Body):
         if self.fidx >= len(self.images['fire']) - 1:
             self.fire_time = 0
 
+    def do_reload(self):
+        self.reload_time += gfw.delta_time
+        self.time += gfw.delta_time
+        self.fidx = round(self.reload_time * Body.FPS)
+        if self.fidx >= len(self.images['reload']) - 1:
+            self.reload_time = 0
+            self.ammo = self.max_ammo
+
     def choose_action(self):
-        if self.on_fire == 1 and self.fire_cool_time <= 0 and self.ammo > 0: # 다른 상태에서 처음 fire 상태로 변경
+        if self.on_reload == 1 and self.reload_cool_time <= 0 and self.ammo < self.max_ammo:
+            self.action = 'reload'
+            print(self.action)
+            self.reload_time = 0
+            self.reload_cool_time = self.reload_delay
+        elif self.reload_time != 0:
+            self.action = 'reload'
+        elif self.on_fire == 1 and self.fire_cool_time <= 0 and self.ammo > 0: # 다른 상태에서 처음 fire 상태로 변경
             self.action = 'fire'
             print(self.action)
             self.fire_time = 0
@@ -166,8 +186,6 @@ class Weapon(Body):
             print('ammo : ', self.ammo)
         elif self.fire_time != 0: # fire 애니메이션 진행도중
             self.action = 'fire'
-        elif self.on_reload == 1:
-            self.action = 'reload'
         elif self.dx != 0 or self.dy != 0:
             self.action = 'walk'
         else:
@@ -177,9 +195,13 @@ class Weapon(Body):
         self.pos = pos
         if self.fire_cool_time > 0:
             self.fire_cool_time -= gfw.delta_time
+        if self.reload_cool_time > 0:
+            self.reload_cool_time -= gfw.delta_time
         Weapon.choose_action(self)
 
-        if self.action == 'fire':
+        if self.action == 'reload':
+            Weapon.do_reload(self)
+        elif self.action == 'fire':
             Weapon.do_fire(self)
         elif self.action == 'idle' or self.action == 'walk':
             Weapon.do_idle(self)
