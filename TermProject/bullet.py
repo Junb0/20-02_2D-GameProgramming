@@ -84,7 +84,7 @@ class Bullet:
 
 class LongBullet(Bullet):
     def __init__(self, pos, damage):
-        super().__init__(pos, (1, 0), 1000, 'long')
+        super().__init__(pos, (1, 0), 1500, 'long')
         self.damage = damage
 
     @staticmethod
