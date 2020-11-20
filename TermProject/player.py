@@ -173,7 +173,7 @@ class Weapon(Body):
             self.reload_time = 0
             self.ammo = self.max_ammo
     def generate_bullet(self):
-        pos = self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
+        pos = self.pos[0] + 30 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
         blt = LongBullet(pos, self.damage)
         gfw.world.add(gfw.layer.bullet, blt)
 
@@ -185,7 +185,7 @@ class Weapon(Body):
             self.reload_cool_time = self.reload_delay
         elif self.reload_time != 0:
             self.action = 'reload'
-        elif self.on_fire == 1 and self.fire_cool_time <= 0 and self.ammo > 0: # 다른 상태에서 처음 fire 상태로 변경
+        elif self.on_fire == 1 and self.fire_cool_time <= 0 and self.ammo > 0 and self.reload_cool_time <= 0: # 다른 상태에서 처음 fire 상태로 변경
             self.action = 'fire'
             print(self.action)
             self.fire_time = 0
