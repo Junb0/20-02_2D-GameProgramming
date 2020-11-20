@@ -74,6 +74,9 @@ class Body:
         x += dx * self.speed * self.mag * gfw.delta_time / uniform
         y += dy * self.speed * self.mag * gfw.delta_time / uniform
 
+        x = clamp(0 + 64 , x, 1280 - 64)
+        y = clamp(0 + 64, y, 430)
+
         self.pos = x, y
 
     def update(self):
