@@ -1,6 +1,7 @@
 import gobj
 import gfw
 from pico2d import *
+from bullet import LongBullet
 
 class Body:
     KEY_MAP = {
@@ -125,6 +126,7 @@ class Weapon(Body):
         self.reload_cool_time = 0
         self.ammo = 5
         self.max_ammo = 5
+        self.damage = 10
 
     @staticmethod
     def load_all_images():
@@ -167,6 +169,10 @@ class Weapon(Body):
         if self.fidx >= len(self.images['reload']) - 1:
             self.reload_time = 0
             self.ammo = self.max_ammo
+    def generate_bullet(self):
+        pos = self.pos[0], self.pos[1]
+        blt = LongBullet(pos, self.damage)
+        gfw.world.add(gfw.layer.bullet, blt)
 
     def choose_action(self):
         if self.on_reload == 1 and self.reload_cool_time <= 0 and self.ammo < self.max_ammo:
@@ -182,6 +188,7 @@ class Weapon(Body):
             self.fire_time = 0
             self.fire_cool_time = self.fire_delay
             # 총알 생성
+            self.generate_bullet()
             self.ammo -= 1
             print('ammo : ', self.ammo)
         elif self.fire_time != 0: # fire 애니메이션 진행도중
