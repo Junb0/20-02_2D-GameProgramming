@@ -118,6 +118,8 @@ class Weapon(Body):
         self.dx = 0
         self.dy = 0
         self.fire_cool_time = 0
+        self.ammo = 5
+        self.max_ammo = 5
 
     @staticmethod
     def load_all_images():
@@ -154,12 +156,14 @@ class Weapon(Body):
             self.fire_time = 0
 
     def choose_action(self):
-        if self.on_fire == 1 and self.fire_cool_time <= 0: # 다른 상태에서 처음 fire 상태로 변경
+        if self.on_fire == 1 and self.fire_cool_time <= 0 and self.ammo > 0: # 다른 상태에서 처음 fire 상태로 변경
             self.action = 'fire'
             print(self.action)
             self.fire_time = 0
             self.fire_cool_time = self.fire_delay
             # 총알 생성
+            self.ammo -= 1
+            print('ammo : ', self.ammo)
         elif self.fire_time != 0: # fire 애니메이션 진행도중
             self.action = 'fire'
         elif self.on_reload == 1:
