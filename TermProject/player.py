@@ -221,12 +221,10 @@ class Weapon(Body):
                 self.state = gobj.point_add(self.state, Weapon.KEY_MAP[pair])
                 self.on_fire = self.state[0]
                 self.on_reload = self.state[1]
-                print('state : ', self.state)
             else:
                 self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
                 self.dx = self.delta[0]
                 self.dy = self.delta[1]
-                print('delta : ', self.delta)
 
 class Player:
     def __init__(self):

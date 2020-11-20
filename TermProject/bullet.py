@@ -56,6 +56,7 @@ class Bullet:
         if self.pos[0] + self.width // 2 > get_canvas_width():
             self.action = 'hit'
             self.time = 0
+            print('bullet hit')
 
     def do_hit(self):
         self.time += gfw.delta_time
@@ -71,6 +72,7 @@ class Bullet:
 
     def remove(self):
         gfw.world.remove(self)
+        print('bullet remove')
 
     def handle_event(self, e):
         pass
