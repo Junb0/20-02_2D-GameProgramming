@@ -98,14 +98,26 @@ class Body:
         image.composite_draw(0, '', *self.pos, image.w * gobj.PIXEL_SCOPE, image.h * gobj.PIXEL_SCOPE)
 
 class Weapon(Body):
+    KEY_MAP = {
+        (SDL_KEYDOWN, SDLK_z): (1, 0),
+        (SDL_KEYUP, SDLK_z): (-1, 0)
+    }
+
     ACTIONS = ['fire', 'idle', 'reload', 'walk']
 
     def __init__(self):
         super().__init__()
-        self.delay = 0.5
+        self.fire_delay = 0.5
         self.file_fmt = '%s/Sprites/weapons/%s/%s/spr_wpn_type89_%s%d.png'
         self.char = 'Assault Rifle'
         self.images = Weapon.load_images(self.char, self.file_fmt)
+        self.fire_time = 0
+        self.state = 0, 0
+        self.on_fire = 0
+        self.on_reload = 0
+        self.dx = 0
+        self.dy = 0
+        self.fire_cool_time = 0
 
     @staticmethod
     def load_all_images():
@@ -134,21 +146,54 @@ class Weapon(Body):
         print('%d images loaded for %s' % (count, char))
         return images
 
-    def update(self, pos, fidx):
-        if self.action == 'idle' or self.action == 'walk':
-            Weapon.do_idle(self)
+    def do_fire(self):
+        self.fire_time += gfw.delta_time
+        self.time += gfw.delta_time
+        self.fidx = round(self.fire_time * Body.FPS)
+        if self.fidx >= len(self.images['fire']) - 1:
+            self.fire_time = 0
+
+    def choose_action(self):
+        if self.on_fire == 1 and self.fire_cool_time <= 0: # 다른 상태에서 처음 fire 상태로 변경
+            self.action = 'fire'
+            print(self.action)
+            self.fire_time = 0
+            self.fire_cool_time = self.fire_delay
+            # 총알 생성
+        elif self.fire_time != 0: # fire 애니메이션 진행도중
+            self.action = 'fire'
+        elif self.on_reload == 1:
+            self.action = 'reload'
+        elif self.dx != 0 or self.dy != 0:
+            self.action = 'walk'
+        else:
+            self.action = 'idle'
+
+    def update(self, pos):
         self.pos = pos
-        self.fidx = fidx
+        if self.fire_cool_time > 0:
+            self.fire_cool_time -= gfw.delta_time
+        Weapon.choose_action(self)
+
+        if self.action == 'fire':
+            Weapon.do_fire(self)
+        elif self.action == 'idle' or self.action == 'walk':
+            Weapon.do_idle(self)
 
     def handle_event(self, e):
         pair = (e.type, e.key)
-        if pair in Body.KEY_MAP:
-            self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
-            dx = self.delta[0]
-            dy = self.delta[1]
-            self.action = \
-                'walk' if dx != 0 or dy != 0 else \
-                'idle'
+
+        if pair in Weapon.KEY_MAP or pair in Body.KEY_MAP:
+            if pair in Weapon.KEY_MAP:
+                self.state = gobj.point_add(self.state, Weapon.KEY_MAP[pair])
+                self.on_fire = self.state[0]
+                self.on_reload = self.state[1]
+                print('state : ', self.state)
+            else:
+                self.delta = gobj.point_add(self.delta, Body.KEY_MAP[pair])
+                self.dx = self.delta[0]
+                self.dy = self.delta[1]
+                print('delta : ', self.delta)
 
 class Player:
     def __init__(self):
@@ -157,7 +202,7 @@ class Player:
 
     def update(self):
         self.body.update()
-        self.weapon.update(self.body.pos, self.body.fidx)
+        self.weapon.update(self.body.pos)
 
     def draw(self):
         self.body.draw()
