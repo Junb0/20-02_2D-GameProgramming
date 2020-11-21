@@ -1,6 +1,7 @@
 from pico2d import *
 import gfw
 import gobj
+import random
 
 class Bullet:
     images = {}
@@ -72,14 +73,13 @@ class Bullet:
 
     def update(self):
         if self.action == 'move':
-            Bullet.do_move(self)
+            self.do_move()
         elif self.action == 'hit':
-            Bullet.do_hit(self)
+            self.do_hit()
 
     def remove(self):
         gfw.world.remove(self)
         print('bullet remove')
-
 
     def draw(self):
         images = self.images[self.action]
@@ -123,3 +123,76 @@ class NkmBullet(Bullet):
     def get_ground(self):
         x, y = self.pos
         return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE
+
+class KrkBullet(Bullet):
+    def __init__(self, pos, damage, rain_num):
+        super().__init__(pos, (0, 0), 0, 'krk', damage, 0)
+        self.rain_num = rain_num
+        self.rain_delay = 0.2
+        self.rain_cooltime = 0
+        self.action = 'hit'
+        self.is_draw = True
+
+    @staticmethod
+    def load_all_images():
+        KrkBullet.load_images('krk')
+
+    def get_ground(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, get_canvas_height(), x + 14 * gobj.PIXEL_SCOPE, get_canvas_height()
+
+    def draw(self):
+        if self.is_draw:
+            images = self.images[self.action]
+            image = images[self.fidx % len(images)]
+            flip = 'h' if self.delta[0] < 0 else ''
+            image.composite_draw(0, flip, *self.pos, image.w * gobj.PIXEL_SCOPE, image.h * gobj.PIXEL_SCOPE)
+
+    def update(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Bullet.FPS)
+        if self.fidx >= len(self.images['hit']):
+            self.is_draw = False
+        if not self.is_draw:
+            self.rain_cooltime -= gfw.delta_time
+            if self.rain_cooltime <= 0:
+                # generate rain
+                dest = (self.pos[0] + random.randint(-80, 80), self.pos[1] + random.randint(-40, 40))
+                rain = RainBullet((dest[0], dest[1] + get_canvas_height()), self.damage, dest)
+                gfw.world.add(gfw.layer.any, rain)
+                self.rain_cooltime = self.rain_delay
+                self.rain_num -= 1
+            if self.rain_num <= 0:
+                self.remove()
+
+class RainBullet(Bullet):
+    def __init__(self, pos, damage, dest_pos):
+        super().__init__(pos, (0, -1), 2000, 'rain', damage, 0)
+        self.dest_pos = dest_pos
+
+    @staticmethod
+    def load_all_images():
+        KrkBullet.load_images('krk')
+
+    def get_ground(self):
+        x, y = self.pos
+        if self.action == 'move':
+            return x - 14 * gobj.PIXEL_SCOPE, 0, x + 14 * gobj.PIXEL_SCOPE, 0
+        else:
+            return x - 14 * gobj.PIXEL_SCOPE, y - 8 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 8 * gobj.PIXEL_SCOPE
+
+    def do_move(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Bullet.FPS)
+        x, y = self.pos
+        dx, dy = self.delta
+
+        x += dx * self.speed * gfw.delta_time
+        y += dy * self.speed * gfw.delta_time
+
+        self.pos = x, y
+
+        if self.pos[1] <= self.dest_pos[1]:
+            self.action = 'hit'
+            self.time = 0
+            print('bullet hit')
