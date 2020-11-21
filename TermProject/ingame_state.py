@@ -12,9 +12,6 @@ canvas_height = 720
 def enter():
     gfw.world.init(['bg', 'bullet' , 'character', 'ui'])
     Player.load_all_images()
-    bullet.LongBullet.load_all_images()
-    bullet.KnhBullet.load_all_images()
-    bullet.NkmBullet.load_all_images()
     global player
     player = Player()
     gfw.world.add(gfw.layer.character, player)
