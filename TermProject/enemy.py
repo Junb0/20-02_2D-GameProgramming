@@ -147,8 +147,24 @@ class Knh(Enemy):
 
     def get_bb(self):
         x, y = self.pos
-        return x - 10 * gobj.PIXEL_SCOPE, y - 13 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y + 5 * gobj.PIXEL_SCOPE
+        return x - 5 * gobj.PIXEL_SCOPE, y - 13 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y + 5 * gobj.PIXEL_SCOPE
 
     def get_ground(self):
         x, y = self.pos
         return x - 10 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE
+
+class Nkm(Enemy):
+    def __init__(self, pos, add_damage, add_hp):
+        super().__init__(pos, (-1, 0), 130, 'nkm', 5 + add_damage, 100 + add_hp, 600, 1.0, NkmBullet,(-50, -30))
+
+    @staticmethod
+    def load_all_images():
+        Nkm.load_images('nkm')
+
+    def get_bb(self):
+        x, y = self.pos
+        return x - 5 * gobj.PIXEL_SCOPE, y - 20 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y + 2 * gobj.PIXEL_SCOPE
+
+    def get_ground(self):
+        x, y = self.pos
+        return x - 10 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE
