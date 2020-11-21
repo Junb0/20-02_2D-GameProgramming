@@ -113,7 +113,7 @@ class Weapon(Body):
 
     def __init__(self):
         super().__init__()
-        self.fire_delay = 0.5
+        self.fire_delay = 0.01
         self.reload_delay = 1.0
         self.file_fmt = '%s/Sprites/weapons/%s/%s/spr_wpn_type89_%s%d.png'
         self.char = 'Assault Rifle'
@@ -128,7 +128,7 @@ class Weapon(Body):
         self.fire_cool_time = 0
         self.reload_cool_time = 0
         self.ammo = 5
-        self.max_ammo = 5
+        self.max_ammo = 500
         self.damage = 10
 
     @staticmethod

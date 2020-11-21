@@ -17,18 +17,16 @@ def enter():
     gfw.world.add(gfw.layer.any, player)
     bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
     gfw.world.add(gfw.layer.bg, bg)
-    # bullet 테스트
-    nkmblt = bullet.NkmBullet((600, 300), 100)
-    gfw.world.add(gfw.layer.any, nkmblt)
-    knhblt = bullet.KnhBullet((600, 400), 100)
-    gfw.world.add(gfw.layer.any, knhblt)
+
     # enemy 테스트
-    knh = enemy.Knh((800, 400), 0, 0)
-    gfw.world.add(gfw.layer.any, knh)
+    for i in range(0, 100):
+        knh = enemy.Knh((800, 400 - i * 2), 0, 0)
+        gfw.world.add(gfw.layer.any, knh)
 
 def update():
     gfw.world.update()
     gfw.world.sort_by_ground(gfw.layer.any)
+
     for e in gfw.world.objects_at(gfw.layer.any):
         if isinstance(e, enemy.Enemy):
             check_enemy(e)
