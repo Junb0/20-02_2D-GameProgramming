@@ -12,11 +12,18 @@ def enter():
     gfw.world.init(['bg', 'bullet' , 'character', 'ui'])
     Player.load_all_images()
     bullet.LongBullet.load_all_images()
+    bullet.KnhBullet.load_all_images()
+    bullet.NkmBullet.load_all_images()
     global player
     player = Player()
     gfw.world.add(gfw.layer.character, player)
     bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
     gfw.world.add(gfw.layer.bg, bg)
+    # bullet 테스트
+    nkmblt = bullet.NkmBullet((600, 300), 100)
+    gfw.world.add(gfw.layer.bullet, nkmblt)
+    knhblt = bullet.KnhBullet((600, 400), 100)
+    gfw.world.add(gfw.layer.bullet, knhblt)
 
 def update():
     gfw.world.update()

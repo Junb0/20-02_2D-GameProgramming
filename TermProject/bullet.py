@@ -57,6 +57,10 @@ class Bullet:
             self.action = 'hit'
             self.time = 0
             print('bullet hit')
+        elif self.pos[0] - self.width // 2 < 0:
+            self.action = 'hit'
+            self.time = 0
+            print('bullet hit')
 
     def do_hit(self):
         self.time += gfw.delta_time
@@ -80,7 +84,8 @@ class Bullet:
     def draw(self):
         images = self.images[self.action]
         image = images[self.fidx % len(images)]
-        image.composite_draw(0, '', *self.pos, image.w * gobj.PIXEL_SCOPE, image.h * gobj.PIXEL_SCOPE)
+        flip = 'h' if self.delta[0] < 0 else ''
+        image.composite_draw(0, flip, *self.pos, image.w * gobj.PIXEL_SCOPE, image.h * gobj.PIXEL_SCOPE)
 
 class LongBullet(Bullet):
     def __init__(self, pos, damage):
@@ -90,3 +95,21 @@ class LongBullet(Bullet):
     @staticmethod
     def load_all_images():
         LongBullet.load_images('long')
+
+class KnhBullet(Bullet):
+    def __init__(self, pos, damage):
+        super().__init__(pos, (-1, 0), 1000, 'knh')
+        self.damage = damage
+
+    @staticmethod
+    def load_all_images():
+        KnhBullet.load_images('knh')
+
+class NkmBullet(Bullet):
+    def __init__(self, pos, damage):
+        super().__init__(pos, (-1, 0), 1000, 'nkm')
+        self.damage = damage
+
+    @staticmethod
+    def load_all_images():
+        NkmBullet.load_images('nkm')
