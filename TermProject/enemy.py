@@ -71,7 +71,7 @@ class Enemy:
     def do_attack(self):
         if self.attack_cooltime <= 0:
             blt = self.bullet(gobj.point_add(self.pos, self.fire_point), self.damage)
-            gfw.world.add(gfw.layer.bullet, blt)
+            gfw.world.add(gfw.layer.any, blt)
             self.attack_cooltime = self.attack_delay
             self.time = 0
         self.time += gfw.delta_time
@@ -148,4 +148,8 @@ class Knh(Enemy):
     def get_bb(self):
         x, y = self.pos
         return x - 10 * gobj.PIXEL_SCOPE, y - 13 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y + 5 * gobj.PIXEL_SCOPE
+
+    def get_ground(self):
+        x, y = self.pos
+        return x - 10 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE
 

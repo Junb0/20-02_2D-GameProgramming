@@ -175,7 +175,7 @@ class Weapon(Body):
     def generate_bullet(self):
         pos = self.pos[0] + 30 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
         blt = LongBullet(pos, self.damage, 0.2)
-        gfw.world.add(gfw.layer.bullet, blt)
+        gfw.world.add(gfw.layer.any, blt)
 
     def choose_action(self):
         if self.on_reload == 1 and self.reload_cool_time <= 0 and self.ammo < self.max_ammo:
@@ -250,3 +250,7 @@ class Player:
     def load_all_images():
         Body.load_all_images()
         Weapon.load_all_images()
+
+    def get_ground(self):
+        x, y = self.body.pos
+        return x - 16 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE, x + 16 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE

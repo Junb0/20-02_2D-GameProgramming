@@ -98,6 +98,9 @@ class LongBullet(Bullet):
     def get_bb(self):
         x, y = self.pos
         return x - 14 * gobj.PIXEL_SCOPE, y - 2 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y + 1 * gobj.PIXEL_SCOPE
+    def get_ground(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, y - 11 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 11 * gobj.PIXEL_SCOPE
 
 class KnhBullet(Bullet):
     def __init__(self, pos, damage):
@@ -106,6 +109,9 @@ class KnhBullet(Bullet):
     @staticmethod
     def load_all_images():
         KnhBullet.load_images('knh')
+    def get_ground(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE
 
 class NkmBullet(Bullet):
     def __init__(self, pos, damage):
