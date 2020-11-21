@@ -3,6 +3,7 @@ import gfw
 from pico2d import *
 from bullet import KnhBullet
 from bullet import NkmBullet
+from bullet import KrkBullet
 
 class Enemy:
     ACTIONS = ['attack', 'hit', 'idle', 'walk', 'die']
@@ -68,10 +69,13 @@ class Enemy:
             self.time = 0
             print('start attack')
 
+    def generate_bullet(self):
+        blt = self.bullet(gobj.point_add(self.pos, self.fire_point), self.damage)
+        gfw.world.add(gfw.layer.any, blt)
+
     def do_attack(self):
         if self.attack_cooltime <= 0:
-            blt = self.bullet(gobj.point_add(self.pos, self.fire_point), self.damage)
-            gfw.world.add(gfw.layer.any, blt)
+            self.generate_bullet()
             self.attack_cooltime = self.attack_delay
             self.time = 0
         self.time += gfw.delta_time
@@ -168,3 +172,23 @@ class Nkm(Enemy):
     def get_ground(self):
         x, y = self.pos
         return x - 10 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE
+
+class Krk(Enemy):
+    def __init__(self, pos, add_damage, add_hp):
+        super().__init__(pos, (-1, 0), 100, 'krk', 1 + add_damage, 100 + add_hp, 550, 4.0, KrkBullet,(-50, -70))
+
+    @staticmethod
+    def load_all_images():
+        Nkm.load_images('krk')
+
+    def get_bb(self):
+        x, y = self.pos
+        return x - 5 * gobj.PIXEL_SCOPE, y - 20 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y + 2 * gobj.PIXEL_SCOPE
+
+    def get_ground(self):
+        x, y = self.pos
+        return x - 10 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE
+
+    def generate_bullet(self):
+        blt = self.bullet((100, self.pos[1] + self.fire_point[1]), self.damage, 6)
+        gfw.world.add(gfw.layer.any, blt)

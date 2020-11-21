@@ -18,13 +18,13 @@ def enter():
     bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
     gfw.world.add(gfw.layer.bg, bg)
 
-    krkblt = bullet.KrkBullet((500, 300), 1, 5)
-    gfw.world.add(gfw.layer.any, krkblt)
     # enemy 테스트
     knh = enemy.Knh((1000, 400), 0, 0)
     gfw.world.add(gfw.layer.any, knh)
     nkm = enemy.Nkm((1000, 200), 0, 0)
     gfw.world.add(gfw.layer.any, nkm)
+    krk = enemy.Krk((600, 300), 0, 0)
+    gfw.world.add(gfw.layer.any, krk)
 
 def update():
     gfw.world.update()
