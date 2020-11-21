@@ -9,7 +9,7 @@ class Enemy:
     images = {}
     FPS = 12
 
-    def __init__(self, pos, delta, speed, char, damage, hp):
+    def __init__(self, pos, delta, speed, char, damage, hp, attack_range, attack_delay, bullet, fire_point):
         self.pos = pos
         self.delta = delta
         self.speed = speed
@@ -20,6 +20,11 @@ class Enemy:
         self.time = 0
         self.fidx = 0
         self.action = 'walk'
+        self.attack_range = attack_range
+        self.attack_delay = attack_delay
+        self.bullet = bullet
+        self.fire_point = fire_point
+        self.attack_cooltime = 0
 
     @staticmethod
     def load_images(char):
@@ -45,8 +50,50 @@ class Enemy:
         print('%d images loaded for %s' % (count, char))
         return images
 
+    def do_walk(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Enemy.FPS)
+        x, y = self.pos
+        dx, dy = self.delta
+
+        x += dx * self.speed * gfw.delta_time
+        y += dy * self.speed * gfw.delta_time
+
+        self.pos = x, y
+
+        if self.pos[0] < self.attack_range:
+            self.action = 'idle'
+            self.time = 0
+            print('start attack')
+
+    def do_attack(self):
+        if self.attack_cooltime <= 0:
+            blt = self.bullet(gobj.point_add(self.pos, self.fire_point), self.damage)
+            gfw.world.add(gfw.layer.bullet, blt)
+            self.attack_cooltime = self.attack_delay
+            self.time = 0
+        self.time += gfw.delta_time
+        self.attack_cooltime -= gfw.delta_time
+        self.fidx = round(self.time * Enemy.FPS)
+        if self.fidx >= len(self.images['attack']):
+            self.time = 0
+            self.action = 'idle'
+
+    def do_idle(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Enemy.FPS)
+        self.attack_cooltime -= gfw.delta_time
+        if self.attack_cooltime <= 0:
+            self.time = 0
+            self.action = 'attack'
+
     def update(self):
-        pass
+        if self.action == 'walk':
+            Enemy.do_walk(self)
+        elif self.action == 'attack':
+            Enemy.do_attack(self)
+        elif self.action == 'idle':
+            Enemy.do_idle(self)
 
     def remove(self):
         gfw.world.remove(self)
@@ -59,7 +106,7 @@ class Enemy:
 
 class Knh(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 400, 'knh', 3 + add_damage, 60 + add_hp)
+        super().__init__(pos, (-1, 0), 200, 'knh', 3 + add_damage, 60 + add_hp, 500, 1.0, KnhBullet,(-50, -30))
 
     @staticmethod
     def load_all_images():
