@@ -174,7 +174,7 @@ class Weapon(Body):
             self.ammo = self.max_ammo
     def generate_bullet(self):
         pos = self.pos[0] + 30 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
-        blt = LongBullet(pos, self.damage)
+        blt = LongBullet(pos, self.damage, 0.2)
         gfw.world.add(gfw.layer.bullet, blt)
 
     def choose_action(self):

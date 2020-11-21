@@ -29,10 +29,20 @@ def enter():
 def update():
     gfw.world.update()
 
+    for e in gfw.world.objects_at(gfw.layer.character):
+        if isinstance(e, enemy.Enemy):
+            check_enemy(e)
+
+def check_enemy(e):
+    for b in gfw.world.objects_at(gfw.layer.bullet):
+        if b.action == 'move' and e.action != 'die' and isinstance(b, bullet.LongBullet):
+            if gobj.collides_box(b, e):
+                e.decrease_life(b.damage, b.stun)
+                b.action = 'hit'
 
 def draw():
     gfw.world.draw()
-    # gobj.draw_collision_box()
+    gobj.draw_collision_box()
 
 def handle_event(e):
     global player

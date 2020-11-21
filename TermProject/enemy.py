@@ -5,7 +5,7 @@ from bullet import KnhBullet
 from bullet import NkmBullet
 
 class Enemy:
-    ACTIONS = ['attack', 'hit', 'idle', 'walk']
+    ACTIONS = ['attack', 'hit', 'idle', 'walk', 'die']
     images = {}
     FPS = 12
 
@@ -25,6 +25,8 @@ class Enemy:
         self.bullet = bullet
         self.fire_point = fire_point
         self.attack_cooltime = 0
+        self.current_action = self.action
+        self.stun = 0
 
     @staticmethod
     def load_images(char):
@@ -83,9 +85,26 @@ class Enemy:
         self.time += gfw.delta_time
         self.fidx = round(self.time * Enemy.FPS)
         self.attack_cooltime -= gfw.delta_time
-        if self.attack_cooltime <= 0:
+        if not self.pos[0] < self.attack_range:
+            self.action = 'walk'
+            self.time = 0
+        elif self.attack_cooltime <= 0:
             self.time = 0
             self.action = 'attack'
+
+    def do_hit(self):
+        self.time += gfw.delta_time
+        self.stun -= gfw.delta_time
+        self.fidx = round(self.time * Enemy.FPS)
+        if self.stun <= 0:
+            self.time = 0
+            self.action = 'idle'
+
+    def do_die(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Enemy.FPS)
+        if self.fidx >= len(self.images['die']):
+            self.remove()
 
     def update(self):
         if self.action == 'walk':
@@ -94,9 +113,23 @@ class Enemy:
             Enemy.do_attack(self)
         elif self.action == 'idle':
             Enemy.do_idle(self)
+        elif self.action == 'hit':
+            Enemy.do_hit(self)
+        elif self.action == 'die':
+            Enemy.do_die(self)
 
     def remove(self):
         gfw.world.remove(self)
+
+    def decrease_life(self, amount, stun):
+        self.hp -= amount
+        self.time = 0
+        if self.hp <= 0:
+            self.action = 'die'
+        else:
+            self.action = 'hit'
+            self.stun = stun
+        return self.hp <= 0
 
     def draw(self):
         images = self.images[self.action]
@@ -111,4 +144,8 @@ class Knh(Enemy):
     @staticmethod
     def load_all_images():
         Knh.load_images('knh')
+
+    def get_bb(self):
+        x, y = self.pos
+        return x - 10 * gobj.PIXEL_SCOPE, y - 13 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y + 5 * gobj.PIXEL_SCOPE
 

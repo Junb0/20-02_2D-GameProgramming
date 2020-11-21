@@ -6,7 +6,7 @@ class Bullet:
     images = {}
     ACTION = ['move', 'hit']
     FPS = 12
-    def __init__(self, pos, delta, speed, char, damage):
+    def __init__(self, pos, delta, speed, char, damage, stun):
         self.pos = pos
         self.delta = delta
         self.speed = speed
@@ -15,6 +15,7 @@ class Bullet:
         self.images = Bullet.load_images(self.char)
         self.time = 0
         self.fidx = 0
+        self.stun = stun
         self.action = 'move'
         self.width = self.images['move'][0].w * gobj.PIXEL_SCOPE
         self.height = self.images['move'][0].h * gobj.PIXEL_SCOPE
@@ -87,16 +88,20 @@ class Bullet:
         image.composite_draw(0, flip, *self.pos, image.w * gobj.PIXEL_SCOPE, image.h * gobj.PIXEL_SCOPE)
 
 class LongBullet(Bullet):
-    def __init__(self, pos, damage):
-        super().__init__(pos, (1, 0), 1500, 'long', damage)
+    def __init__(self, pos, damage, stun):
+        super().__init__(pos, (1, 0), 1500, 'long', damage, stun)
 
     @staticmethod
     def load_all_images():
         LongBullet.load_images('long')
 
+    def get_bb(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, y - 2 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y + 1 * gobj.PIXEL_SCOPE
+
 class KnhBullet(Bullet):
     def __init__(self, pos, damage):
-        super().__init__(pos, (-1, 0), 1000, 'knh', damage)
+        super().__init__(pos, (-1, 0), 1000, 'knh', damage, 0)
 
     @staticmethod
     def load_all_images():
@@ -104,7 +109,7 @@ class KnhBullet(Bullet):
 
 class NkmBullet(Bullet):
     def __init__(self, pos, damage):
-        super().__init__(pos, (-1, 0), 1000, 'nkm', damage)
+        super().__init__(pos, (-1, 0), 1000, 'nkm', damage, 0)
 
     @staticmethod
     def load_all_images():
