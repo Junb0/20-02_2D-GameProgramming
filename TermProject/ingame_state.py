@@ -4,6 +4,7 @@ import gobj
 from background import Background
 from player import Player
 import bullet
+import enemy
 
 canvas_width = 1280
 canvas_height = 720
@@ -24,6 +25,9 @@ def enter():
     gfw.world.add(gfw.layer.bullet, nkmblt)
     knhblt = bullet.KnhBullet((600, 400), 100)
     gfw.world.add(gfw.layer.bullet, knhblt)
+    # enemy 테스트
+    knh = enemy.Knh((800, 400), 0, 0)
+    gfw.world.add(gfw.layer.character, knh)
 
 def update():
     gfw.world.update()
