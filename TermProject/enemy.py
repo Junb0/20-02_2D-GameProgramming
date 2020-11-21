@@ -152,4 +152,3 @@ class Knh(Enemy):
     def get_ground(self):
         x, y = self.pos
         return x - 10 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 16 * gobj.PIXEL_SCOPE
-

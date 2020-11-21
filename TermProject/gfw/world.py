@@ -38,6 +38,9 @@ def objects_at(layer_index):
 def count_at(layer_index):
     return len(objects[layer_index])
 
+def sort_by_ground(layer_index):
+    objects[layer_index].sort(key = lambda o : o.get_ground()[1], reverse = True)
+
 def count():
     return reduce(lambda sum, a: sum + len(a), objects, 0)
 

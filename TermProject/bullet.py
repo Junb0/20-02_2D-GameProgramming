@@ -120,3 +120,6 @@ class NkmBullet(Bullet):
     @staticmethod
     def load_all_images():
         NkmBullet.load_images('nkm')
+    def get_ground(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE

@@ -28,7 +28,7 @@ def enter():
 
 def update():
     gfw.world.update()
-
+    gfw.world.sort_by_ground(gfw.layer.any)
     for e in gfw.world.objects_at(gfw.layer.any):
         if isinstance(e, enemy.Enemy):
             check_enemy(e)
