@@ -19,9 +19,10 @@ def enter():
     gfw.world.add(gfw.layer.bg, bg)
 
     # enemy 테스트
-    for i in range(0, 100):
-        knh = enemy.Knh((800, 400 - i * 2), 0, 0)
-        gfw.world.add(gfw.layer.any, knh)
+    knh = enemy.Knh((1000, 400), 0, 0)
+    gfw.world.add(gfw.layer.any, knh)
+    nkm = enemy.Nkm((1000, 200), 0, 0)
+    gfw.world.add(gfw.layer.any, nkm)
 
 def update():
     gfw.world.update()
