@@ -6,11 +6,12 @@ class Bullet:
     images = {}
     ACTION = ['move', 'hit']
     FPS = 12
-    def __init__(self, pos, delta, speed, char):
+    def __init__(self, pos, delta, speed, char, damage):
         self.pos = pos
         self.delta = delta
         self.speed = speed
         self.char = char
+        self.damage = damage
         self.images = Bullet.load_images(self.char)
         self.time = 0
         self.fidx = 0
@@ -78,8 +79,6 @@ class Bullet:
         gfw.world.remove(self)
         print('bullet remove')
 
-    def handle_event(self, e):
-        pass
 
     def draw(self):
         images = self.images[self.action]
@@ -89,8 +88,7 @@ class Bullet:
 
 class LongBullet(Bullet):
     def __init__(self, pos, damage):
-        super().__init__(pos, (1, 0), 1500, 'long')
-        self.damage = damage
+        super().__init__(pos, (1, 0), 1500, 'long', damage)
 
     @staticmethod
     def load_all_images():
@@ -98,8 +96,7 @@ class LongBullet(Bullet):
 
 class KnhBullet(Bullet):
     def __init__(self, pos, damage):
-        super().__init__(pos, (-1, 0), 1000, 'knh')
-        self.damage = damage
+        super().__init__(pos, (-1, 0), 1000, 'knh', damage)
 
     @staticmethod
     def load_all_images():
@@ -107,8 +104,7 @@ class KnhBullet(Bullet):
 
 class NkmBullet(Bullet):
     def __init__(self, pos, damage):
-        super().__init__(pos, (-1, 0), 1000, 'nkm')
-        self.damage = damage
+        super().__init__(pos, (-1, 0), 1000, 'nkm', damage)
 
     @staticmethod
     def load_all_images():
