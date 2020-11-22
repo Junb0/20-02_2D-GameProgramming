@@ -2,6 +2,7 @@ import gobj
 import gfw
 from pico2d import *
 from bullet import LongBullet
+from bullet import ShortBullet
 
 class Body:
     KEY_MAP = {
@@ -172,6 +173,7 @@ class Weapon(Body):
         if self.fidx >= len(self.images['reload']) - 1:
             self.reload_time = 0
             self.ammo = self.max_ammo
+
     def generate_bullet(self):
         pos = self.pos[0] + 30 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
         blt = LongBullet(pos, self.damage, 0.2)

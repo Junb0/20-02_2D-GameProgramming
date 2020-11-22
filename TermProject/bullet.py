@@ -59,11 +59,9 @@ class Bullet:
         if self.pos[0] + self.width // 2 > get_canvas_width():
             self.action = 'hit'
             self.time = 0
-            print('bullet hit')
         elif self.pos[0] - self.width // 2 < 0:
             self.action = 'hit'
             self.time = 0
-            print('bullet hit')
 
     def do_hit(self):
         self.time += gfw.delta_time
@@ -79,7 +77,6 @@ class Bullet:
 
     def remove(self):
         gfw.world.remove(self)
-        print('bullet remove')
 
     def draw(self):
         images = self.images[self.action]
@@ -90,6 +87,7 @@ class Bullet:
 class LongBullet(Bullet):
     def __init__(self, pos, damage, stun):
         super().__init__(pos, (1, 0), 1500, 'long', damage, stun)
+        self.images = Bullet.load_images(self.char)
 
     @staticmethod
     def load_all_images():
@@ -102,9 +100,27 @@ class LongBullet(Bullet):
         x, y = self.pos
         return x - 14 * gobj.PIXEL_SCOPE, y - 11 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 11 * gobj.PIXEL_SCOPE
 
+class ShortBullet(Bullet):
+    def __init__(self, pos, damage, stun):
+        super().__init__(pos, (1, 0), 1000, 'short', damage, stun)
+        self.images = Bullet.load_images(self.char)
+
+    @staticmethod
+    def load_all_images():
+        LongBullet.load_images('short')
+
+    def get_bb(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, y - 2 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y + 1 * gobj.PIXEL_SCOPE
+    def get_ground(self):
+        x, y = self.pos
+        return x - 14 * gobj.PIXEL_SCOPE, y - 11 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 11 * gobj.PIXEL_SCOPE
+
+
 class KnhBullet(Bullet):
     def __init__(self, pos, damage):
         super().__init__(pos, (-1, 0), 1000, 'knh', damage, 0)
+        self.images = Bullet.load_images(self.char)
 
     @staticmethod
     def load_all_images():
@@ -116,6 +132,7 @@ class KnhBullet(Bullet):
 class NkmBullet(Bullet):
     def __init__(self, pos, damage):
         super().__init__(pos, (-1, 0), 1000, 'nkm', damage, 0)
+        self.images = Bullet.load_images(self.char)
 
     @staticmethod
     def load_all_images():
@@ -126,12 +143,13 @@ class NkmBullet(Bullet):
 
 class KrkBullet(Bullet):
     def __init__(self, pos, damage, rain_num):
-        super().__init__(pos, (0, 0), 0, 'krk', damage, 0)
+        super().__init__(pos, (0, 0), 0, 'krk', 0, 0)
         self.rain_num = rain_num
         self.rain_delay = 0.2
         self.rain_cooltime = 0
         self.action = 'hit'
         self.is_draw = True
+        self.images = Bullet.load_images(self.char)
 
     @staticmethod
     def load_all_images():
@@ -169,6 +187,7 @@ class RainBullet(Bullet):
     def __init__(self, pos, damage, dest_pos):
         super().__init__(pos, (0, -1), 2000, 'rain', damage, 0)
         self.dest_pos = dest_pos
+        self.images = Bullet.load_images(self.char)
 
     @staticmethod
     def load_all_images():

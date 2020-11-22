@@ -2,14 +2,15 @@ import gobj
 import gfw
 from pico2d import *
 import enemy
-from bullet import LongBullet
+from bullet import ShortBullet
+
 
 class Tower:
     ACTIONS = ['idle', 'attack']
     images = {}
     FPS = 12
 
-    def __init__(self, pos, attack_delay = 3, add_damage = 0):
+    def __init__(self, pos, attack_delay = 4, add_damage = 0):
         self.pos = pos
         self.damage = 20 + add_damage
         self.attack_delay = attack_delay
@@ -58,7 +59,7 @@ class Tower:
             self.action = 'attack'
 
     def generate_bullet(self):
-        blt = LongBullet((self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE), 10, 1.0)
+        blt = ShortBullet((self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE), self.damage, 1.0)
         gfw.world.add(gfw.layer.any, blt)
 
     def do_attack(self):

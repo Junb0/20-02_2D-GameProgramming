@@ -29,6 +29,7 @@ def enter():
     tw = tower.Tower((300, 200))
     gfw.world.add(gfw.layer.any, tw)
 
+
 def update():
     gfw.world.update()
     gfw.world.sort_by_ground(gfw.layer.any)
@@ -39,10 +40,11 @@ def update():
 
 def check_enemy(e):
     for b in gfw.world.objects_at(gfw.layer.any):
-        if isinstance(b, bullet.LongBullet):
+        if isinstance(b, bullet.LongBullet) or isinstance(b, bullet.ShortBullet):
             if b.action == 'move' and e.action != 'die' and gobj.collides_box(b, e):
                 e.decrease_life(b.damage, b.stun)
                 b.action = 'hit'
+                b.time = 0
 
 def draw():
     gfw.world.draw()
