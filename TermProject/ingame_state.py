@@ -26,7 +26,7 @@ def enter():
     SG.spawn_krk_random()
     SG.spawn_nkm_random()
 
-    tw = tower.Tower((300, 200), 10, 1)
+    tw = tower.Tower((300, 200))
     gfw.world.add(gfw.layer.any, tw)
 
 def update():
@@ -46,7 +46,7 @@ def check_enemy(e):
 
 def draw():
     gfw.world.draw()
-    #gobj.draw_collision_box()
+    gobj.draw_collision_box()
 
 def handle_event(e):
     global player

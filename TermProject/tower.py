@@ -1,6 +1,7 @@
 import gobj
 import gfw
 from pico2d import *
+import enemy
 from bullet import LongBullet
 
 class Tower:
@@ -8,10 +9,11 @@ class Tower:
     images = {}
     FPS = 12
 
-    def __init__(self, pos, damage, attack_delay):
+    def __init__(self, pos, attack_delay = 3, add_damage = 0):
         self.pos = pos
-        self.damage = damage
+        self.damage = 20 + add_damage
         self.attack_delay = attack_delay
+        self.attack_cooltime = 0
         self.time = 0
         self.fidx = 0
         self.action = 'idle'
@@ -42,8 +44,39 @@ class Tower:
         print('%d images loaded for %s' % (count, char))
         return images
 
+    def check_enemy(self):
+        for e in gfw.world.objects_at(gfw.layer.any):
+            if isinstance(e, enemy.Enemy):
+                if e.action != 'die' and e.get_bb()[1] <= self.pos[1] - 5 * gobj.PIXEL_SCOPE and e.get_bb()[3] >= self.pos[1] - 5 * gobj.PIXEL_SCOPE:
+                    return True
+    def do_idle(self):
+        self.time += gfw.delta_time
+        self.fidx = round(self.time * Tower.FPS)
+        self.attack_cooltime -= gfw.delta_time
+        if self.attack_cooltime <= 0 and self.check_enemy():
+            self.time = 0
+            self.action = 'attack'
+
+    def generate_bullet(self):
+        blt = LongBullet((self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE), 10, 1.0)
+        gfw.world.add(gfw.layer.any, blt)
+
+    def do_attack(self):
+        if self.attack_cooltime <= 0 and self.fidx == 4:
+            self.generate_bullet()
+            self.attack_cooltime = self.attack_delay
+        self.time += gfw.delta_time
+        self.attack_cooltime -= gfw.delta_time
+        self.fidx = round(self.time * Tower.FPS)
+        if self.fidx >= len(self.images['attack']):
+            self.time = 0
+            self.action = 'idle'
+
     def update(self):
-        pass
+        if self.action == 'idle':
+            self.do_idle()
+        elif self.action == 'attack':
+            self.do_attack()
 
     def draw(self):
         images = self.images[self.action]
