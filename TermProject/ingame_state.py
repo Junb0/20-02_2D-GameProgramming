@@ -41,14 +41,25 @@ def update():
     for e in gfw.world.objects_at(gfw.layer.any):
         if isinstance(e, enemy.Enemy):
             check_enemy(e)
+    check_life()
 
 def check_enemy(e):
     for b in gfw.world.objects_at(gfw.layer.any):
         if isinstance(b, bullet.LongBullet) or isinstance(b, bullet.ShortBullet):
             if b.action == 'move' and e.action != 'die' and gobj.collides_box(b, e):
-                e.decrease_life(b.damage, b.stun)
+                die = e.decrease_life(b.damage, b.stun)
                 b.action = 'hit'
                 b.time = 0
+                if die:
+                    player.gold += e.drop_gold
+
+def check_life():
+    for b in gfw.world.objects_at(gfw.layer.any):
+        if isinstance(b, bullet.RainBullet) or isinstance(b, bullet.NkmBullet) or isinstance(b,bullet.KnhBullet):
+            if b.check_hit() and b.action == 'move':
+                b.action = 'hit'
+                b.time = 0
+                player.life -= b.damage
 
 def draw():
     gfw.world.draw()

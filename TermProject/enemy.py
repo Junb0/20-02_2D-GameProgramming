@@ -4,13 +4,14 @@ from pico2d import *
 from bullet import KnhBullet
 from bullet import NkmBullet
 from bullet import KrkBullet
+import random
 
 class Enemy:
     ACTIONS = ['attack', 'hit', 'idle', 'walk', 'die']
     images = {}
     FPS = 12
 
-    def __init__(self, pos, delta, speed, char, damage, hp, attack_range, attack_delay, bullet, fire_point):
+    def __init__(self, pos, delta, speed, char, damage, hp, attack_range, attack_delay, bullet, fire_point, drop_gold,attack_timing = 0):
         self.pos = pos
         self.delta = delta
         self.speed = speed
@@ -28,6 +29,8 @@ class Enemy:
         self.attack_cooltime = 0
         self.current_action = self.action
         self.stun = 0
+        self.attack_timing = attack_timing
+        self.drop_gold = drop_gold
 
     @staticmethod
     def load_images(char):
@@ -74,10 +77,10 @@ class Enemy:
         gfw.world.add(gfw.layer.any, blt)
 
     def do_attack(self):
-        if self.attack_cooltime <= 0:
+        if self.attack_cooltime <= 0 and self.fidx == self.attack_timing:
             self.generate_bullet()
             self.attack_cooltime = self.attack_delay
-            self.time = 0
+
         self.time += gfw.delta_time
         self.attack_cooltime -= gfw.delta_time
         self.fidx = round(self.time * Enemy.FPS)
@@ -143,7 +146,7 @@ class Enemy:
 
 class Knh(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 200, 'knh', 3 + add_damage, 60 + add_hp, 500, 1.0, KnhBullet,(-50, -30))
+        super().__init__(pos, (-1, 0), 200, 'knh', 3 + add_damage, 60 + add_hp, 500, 1.0, KnhBullet,(-50, -30), 4 + random.randint(0, 2))
 
     @staticmethod
     def load_all_images():
@@ -159,7 +162,7 @@ class Knh(Enemy):
 
 class Nkm(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 130, 'nkm', 6 + add_damage, 100 + add_hp, 600, 1.8, NkmBullet,(-50, -30))
+        super().__init__(pos, (-1, 0), 130, 'nkm', 6 + add_damage, 100 + add_hp, 600, 1.8, NkmBullet,(-50, -48), 7+ random.randint(0, 3), 2)
 
     @staticmethod
     def load_all_images():
@@ -175,7 +178,7 @@ class Nkm(Enemy):
 
 class Krk(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 100, 'krk', 1 + add_damage, 100 + add_hp, 550, 4.0, KrkBullet,(-50, -70))
+        super().__init__(pos, (-1, 0), 100, 'krk', 1 + add_damage, 100 + add_hp, 550, 4.0, KrkBullet,(-50, -70), 13 + random.randint(0, 5))
 
     @staticmethod
     def load_all_images():

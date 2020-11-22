@@ -236,6 +236,7 @@ class Player:
         self.body = Body()
         self.weapon = Weapon()
         self.life = 100
+        self.gold = 0
 
     def update(self):
         self.body.update()

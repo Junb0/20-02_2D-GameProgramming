@@ -59,9 +59,6 @@ class Bullet:
         if self.pos[0] + self.width // 2 > get_canvas_width():
             self.action = 'hit'
             self.time = 0
-        elif self.pos[0] - self.width // 2 < 0:
-            self.action = 'hit'
-            self.time = 0
 
     def do_hit(self):
         self.time += gfw.delta_time
@@ -129,6 +126,12 @@ class KnhBullet(Bullet):
         x, y = self.pos
         return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE
 
+    def check_hit(self):
+        if self.pos[0] - self.width // 2 < 0:
+            return True
+        else:
+            return False
+
 class NkmBullet(Bullet):
     def __init__(self, pos, damage):
         super().__init__(pos, (-1, 0), 1000, 'nkm', damage, 0)
@@ -141,9 +144,15 @@ class NkmBullet(Bullet):
         x, y = self.pos
         return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE
 
+    def check_hit(self):
+        if self.pos[0] - self.width // 2 < 0:
+            return True
+        else:
+            return False
+
 class KrkBullet(Bullet):
     def __init__(self, pos, damage, rain_num):
-        super().__init__(pos, (0, 0), 0, 'krk', 0, 0)
+        super().__init__(pos, (0, 0), 0, 'krk', damage, 0)
         self.rain_num = rain_num
         self.rain_delay = 0.2
         self.rain_cooltime = 0
@@ -200,18 +209,8 @@ class RainBullet(Bullet):
         else:
             return x - 14 * gobj.PIXEL_SCOPE, y - 8 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 8 * gobj.PIXEL_SCOPE
 
-    def do_move(self):
-        self.time += gfw.delta_time
-        self.fidx = round(self.time * Bullet.FPS)
-        x, y = self.pos
-        dx, dy = self.delta
-
-        x += dx * self.speed * gfw.delta_time
-        y += dy * self.speed * gfw.delta_time
-
-        self.pos = x, y
-
+    def check_hit(self):
         if self.pos[1] <= self.dest_pos[1]:
-            self.action = 'hit'
-            self.time = 0
-            print('bullet hit')
+            return True
+        else:
+            return False
