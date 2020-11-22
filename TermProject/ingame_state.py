@@ -6,6 +6,7 @@ from player import Player
 from spawner import SpawnerGenerator
 import bullet
 import enemy
+import tower
 
 canvas_width = 1280
 canvas_height = 720
@@ -24,6 +25,9 @@ def enter():
     SG.spawn_knh_random()
     SG.spawn_krk_random()
     SG.spawn_nkm_random()
+
+    tw = tower.Tower((300, 200), 10, 1)
+    gfw.world.add(gfw.layer.any, tw)
 
 def update():
     gfw.world.update()
