@@ -3,6 +3,7 @@ from pico2d import *
 import gobj
 from background import Background
 from player import Player
+from spawner import SpawnerGenerator
 import bullet
 import enemy
 
@@ -17,14 +18,12 @@ def enter():
     gfw.world.add(gfw.layer.any, player)
     bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
     gfw.world.add(gfw.layer.bg, bg)
+    global SG
+    SG = SpawnerGenerator()
 
-    # enemy 테스트
-    knh = enemy.Knh((1000, 400), 0, 0)
-    gfw.world.add(gfw.layer.any, knh)
-    nkm = enemy.Nkm((1000, 200), 0, 0)
-    gfw.world.add(gfw.layer.any, nkm)
-    krk = enemy.Krk((600, 300), 0, 0)
-    gfw.world.add(gfw.layer.any, krk)
+    SG.spawn_knh_random()
+    SG.spawn_krk_random()
+    SG.spawn_nkm_random()
 
 def update():
     gfw.world.update()
@@ -43,7 +42,7 @@ def check_enemy(e):
 
 def draw():
     gfw.world.draw()
-    gobj.draw_collision_box()
+    #gobj.draw_collision_box()
 
 def handle_event(e):
     global player

@@ -159,7 +159,7 @@ class Knh(Enemy):
 
 class Nkm(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 130, 'nkm', 5 + add_damage, 100 + add_hp, 600, 1.0, NkmBullet,(-50, -30))
+        super().__init__(pos, (-1, 0), 130, 'nkm', 6 + add_damage, 100 + add_hp, 600, 1.8, NkmBullet,(-50, -30))
 
     @staticmethod
     def load_all_images():
