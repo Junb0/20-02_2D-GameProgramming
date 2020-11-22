@@ -3,6 +3,7 @@ from pico2d import *
 import gobj
 from background import Background
 from player import Player
+from ui import UIFrame
 from spawner import SpawnerGenerator
 import bullet
 import enemy
@@ -19,6 +20,8 @@ def enter():
     gfw.world.add(gfw.layer.any, player)
     bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
     gfw.world.add(gfw.layer.bg, bg)
+    ui = UIFrame()
+    gfw.world.add(gfw.layer.ui, ui)
     global SG
     SG = SpawnerGenerator()
 
