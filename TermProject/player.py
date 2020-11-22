@@ -235,6 +235,7 @@ class Player:
     def __init__(self):
         self.body = Body()
         self.weapon = Weapon()
+        self.life = 100
 
     def update(self):
         self.body.update()
