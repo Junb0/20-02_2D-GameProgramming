@@ -127,7 +127,7 @@ class KnhBullet(Bullet):
         return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE
 
     def check_hit(self):
-        if self.pos[0] - self.width // 2 < 0:
+        if self.pos[0] - self.width // 2 < 50:
             return True
         else:
             return False
@@ -145,7 +145,7 @@ class NkmBullet(Bullet):
         return x - 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE, x + 14 * gobj.PIXEL_SCOPE, y - 9 * gobj.PIXEL_SCOPE
 
     def check_hit(self):
-        if self.pos[0] - self.width // 2 < 0:
+        if self.pos[0] - self.width // 2 < 50:
             return True
         else:
             return False

@@ -21,7 +21,6 @@ class EnemySpawner:
         width, height = 48, 48
         sx = (self.fidx % 14) * width
         sy = 0
-        self.image.clip_draw(sx, sy, width, height, *self.pos)
         self.image.clip_composite_draw(sx, sy, width, height, 0, '', *self.pos, width * gobj.PIXEL_SCOPE, height * gobj.PIXEL_SCOPE)
 
     def update(self):

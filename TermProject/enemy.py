@@ -193,5 +193,5 @@ class Krk(Enemy):
         return x - 10 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE, x + 5 * gobj.PIXEL_SCOPE, y - 24 * gobj.PIXEL_SCOPE
 
     def generate_bullet(self):
-        blt = self.bullet((100, self.pos[1] + self.fire_point[1]), self.damage, 6)
+        blt = self.bullet((50, self.pos[1] + self.fire_point[1]), self.damage, 6)
         gfw.world.add(gfw.layer.any, blt)

@@ -6,9 +6,11 @@ from background import Background
 from player import Player
 from ui import UIFrame
 from spawner import SpawnerGenerator
+from wall import Wall
 import bullet
 import enemy
 import tower
+
 
 canvas_width = 1280
 canvas_height = 720
@@ -23,6 +25,7 @@ def enter():
     gfw.world.add(gfw.layer.bg, bg)
     ui = UIFrame(player)
     gfw.world.add(gfw.layer.ui, ui)
+    generate_wall()
     global SG
     SG = SpawnerGenerator()
 
@@ -60,6 +63,20 @@ def check_life():
                 b.action = 'hit'
                 b.time = 0
                 player.life -= b.damage
+
+def generate_wall():
+    wall1 = Wall((10, 70))
+    wall2 = Wall((10, 136))
+    wall3 = Wall((10, 202))
+    wall4 = Wall((10, 268))
+    wall5 = Wall((10, 334))
+    wall6 = Wall((10, 4))
+    gfw.world.add(gfw.layer.any, wall1)
+    gfw.world.add(gfw.layer.any, wall2)
+    gfw.world.add(gfw.layer.any, wall3)
+    gfw.world.add(gfw.layer.any, wall4)
+    gfw.world.add(gfw.layer.any, wall5)
+    gfw.world.add(gfw.layer.any, wall6)
 
 def draw():
     gfw.world.draw()
