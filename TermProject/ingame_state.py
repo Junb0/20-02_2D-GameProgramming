@@ -10,6 +10,7 @@ from wall import Wall
 import bullet
 import enemy
 import tower
+from upgrade import UpgradeControl
 
 canvas_width = 1280
 canvas_height = 720
@@ -27,6 +28,8 @@ def enter():
     generate_wall()
     global SG
     SG = SpawnerGenerator()
+    global UC
+    UC = UpgradeControl(ui, player)
 
     for _ in range(1):
         SG.spawn_knh_random()
@@ -47,6 +50,7 @@ def check_enemy(e):
         if isinstance(b, bullet.LongBullet) or isinstance(b, bullet.ShortBullet):
             if b.action == 'move' and e.action != 'die' and gobj.collides_box(b, e):
                 die = e.decrease_life(b.damage, b.stun)
+                print(b.damage)
                 b.action = 'hit'
                 b.time = 0
                 if die:
@@ -87,6 +91,7 @@ def handle_event(e):
             gfw.pop()
 
     player.handle_event(e)
+    UC.handle_event(e)
 
 def exit():
     pass

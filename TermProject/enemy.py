@@ -95,9 +95,11 @@ class Enemy:
         if not self.pos[0] < self.attack_range:
             self.action = 'walk'
             self.time = 0
+            self.fidx = 0
         elif self.attack_cooltime <= 0:
             self.time = 0
             self.action = 'attack'
+            self.fidx = 0
 
     def do_hit(self):
         self.time += gfw.delta_time

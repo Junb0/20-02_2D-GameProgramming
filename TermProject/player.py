@@ -131,6 +131,7 @@ class Weapon(Body):
         self.max_ammo = 5
         self.ammo = self.max_ammo
         self.damage = 10
+        self.stun = 0.2
 
     @staticmethod
     def load_all_images():
@@ -176,7 +177,7 @@ class Weapon(Body):
 
     def generate_bullet(self):
         pos = self.pos[0] + 30 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE
-        blt = LongBullet(pos, self.damage, 0.2)
+        blt = LongBullet(pos, self.damage, self.stun)
         gfw.world.add(gfw.layer.any, blt)
 
     def choose_action(self):
@@ -236,7 +237,7 @@ class Player:
         self.body = Body()
         self.weapon = Weapon()
         self.life = 100
-        self.gold = 0
+        self.gold = 10000
 
     def update(self):
         self.body.update()

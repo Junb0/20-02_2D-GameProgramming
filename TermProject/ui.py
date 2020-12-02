@@ -3,6 +3,8 @@ from ext_pico2d import *
 import gfw
 import gobj
 
+MESSAGE_TIME = 2
+
 class UIFrame:
     image = None
 
@@ -10,14 +12,20 @@ class UIFrame:
         self.image = gfw.image.load(gobj.RES_DIR + '/Sprites/UI/spr_ui_frame.png')
         self.font_ui1 = gfw.font.load(gobj.res('manaspc.ttf'),35)
         self.font_ui2 = gfw.font.load(gobj.res('manaspc.ttf'), 30)
+        self.font_ui3 = gfw.font.load(gobj.res('manaspc.ttf'), 20)
         self.font_message = gfw.font.load(gobj.res('Sam3KRFont.ttf'), 40)
         self.player = player
         self.display_life = player.life
         self.display_gold = player.gold
-        self.message_time1 = 3
-        self.message_time2 = 3
+        self.message_time1 = MESSAGE_TIME
+        self.message_time2 = MESSAGE_TIME
         self.messages1 = ['The next wave is coming soon.', '1234']
         self.messages2 = ['hihi']
+        self.ad_ui = ''
+        self.magazine_ui = ''
+        self.tower_ui = ''
+        self.repair_ui = ''
+        self.wave_ui = 1
 
     def draw(self):
         image = self.image
@@ -26,10 +34,16 @@ class UIFrame:
         self.font_ui1.draw(100, 630, str(self.player.weapon.max_ammo), (255, 255, 255))
         self.font_ui2.draw(210, 680, str(self.display_life), (255, 255, 255))
         self.font_ui2.draw(210, 620, str(self.display_gold), (255, 255, 255))
+        draw_centered_text(self.font_ui3, self.ad_ui, 450, 580, 115, 20)
+        draw_centered_text(self.font_ui3, self.magazine_ui, 611, 580, 115, 20)
+        draw_centered_text(self.font_ui3, self.tower_ui, 777, 580, 115, 20)
+        draw_centered_text(self.font_ui3, self.repair_ui, 937, 580, 115, 20)
+
+
         if len(self.messages1):
-            draw_centered_text(self.font_message, self.messages1[0], 0, 550, 1280, 40)
+            draw_centered_text(self.font_message, self.messages1[0], 0, 530, 1280, 40)
         if len(self.messages2):
-            draw_centered_text(self.font_message, self.messages2[0], 0, 500, 1280, 40, (255, 215, 0))
+            draw_centered_text(self.font_message, self.messages2[0], 0, 490, 1280, 40, (255, 215, 0))
 
     def update(self):
         if self.display_life < self.player.life:
@@ -46,13 +60,13 @@ class UIFrame:
             self.message_time1 -= gfw.delta_time
             if self.message_time1 <= 0:
                 self.messages1.pop(0)
-                self.message_time1 = 3
+                self.message_time1 = MESSAGE_TIME
 
         if self.message_time2 > 0 and len(self.messages2):
             self.message_time2 -= gfw.delta_time
             if self.message_time2 <= 0:
                 self.messages2.pop(0)
-                self.message_time2 = 3
+                self.message_time2 = MESSAGE_TIME
 
     def handle_event(self, e):
         pass

@@ -57,6 +57,7 @@ class Tower:
         if self.attack_cooltime <= 0 and self.check_enemy():
             self.time = 0
             self.action = 'attack'
+            self.fidx = round(self.time * Tower.FPS)
 
     def generate_bullet(self):
         blt = ShortBullet((self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE), self.damage, 1.0)
