@@ -128,8 +128,8 @@ class Weapon(Body):
         self.dy = 0
         self.fire_cool_time = 0
         self.reload_cool_time = 0
-        self.ammo = 5
         self.max_ammo = 5
+        self.ammo = self.max_ammo
         self.damage = 10
 
     @staticmethod

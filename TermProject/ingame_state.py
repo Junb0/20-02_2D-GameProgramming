@@ -11,7 +11,6 @@ import bullet
 import enemy
 import tower
 
-
 canvas_width = 1280
 canvas_height = 720
 
@@ -29,13 +28,10 @@ def enter():
     global SG
     SG = SpawnerGenerator()
 
-    SG.spawn_knh_random()
-    SG.spawn_krk_random()
-    SG.spawn_nkm_random()
-
-    tw = tower.Tower((300, 200))
-    gfw.world.add(gfw.layer.any, tw)
-
+    for _ in range(1):
+        SG.spawn_knh_random()
+        SG.spawn_krk_random()
+        SG.spawn_nkm_random()
 
 def update():
     gfw.world.update()
@@ -80,7 +76,7 @@ def generate_wall():
 
 def draw():
     gfw.world.draw()
-    gobj.draw_collision_box()
+    #gobj.draw_collision_box()
 
 def handle_event(e):
     global player
