@@ -7,7 +7,7 @@
     "krk2": [2, 0, 40],
     "nkm2": [3, 0, 30]
   },
-  "waves":[
+  "wave_list":[
     {
       "start_delay" : 3,
       "start_message" : [],
