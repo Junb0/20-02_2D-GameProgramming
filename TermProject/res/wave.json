@@ -1,0 +1,47 @@
+{
+  "enemy_dict":{
+    "knh1": [1, 0, 0],
+    "krk1": [2, 0, 0],
+    "nkm1": [3, 0, 0],
+    "knh2": [1, 0, 20],
+    "krk2": [2, 0, 40],
+    "nkm2": [3, 0, 30]
+  },
+  "waves":[
+    {
+      "start_delay" : 3,
+      "start_message" : [],
+      "small_wave": [
+        {"enemies": ["knh1", "knh1"], "delay":  4},
+        {"enemies": ["knh1", "knh1"], "delay":  4},
+        {"enemies": ["knh1"], "delay":  3}
+      ],
+      "end_delay" : 3,
+      "end_message": []
+    },
+
+    {
+      "start_delay" : 3,
+      "start_message" : [],
+      "small_wave": [
+        {"enemies": ["knh1", "nkm1"], "delay":  6},
+        {"enemies": ["knh1", "knh1", "knh1"], "delay":  5},
+        {"enemies": ["nkm1"], "delay":  3}
+      ],
+      "end_delay" : 3,
+      "end_message": []
+    },
+
+    {
+      "start_delay" : 3,
+      "start_message" : [],
+      "small_wave": [
+        {"enemies": ["knh1", "knh1"], "delay":  3},
+        {"enemies": ["krk1"], "delay":  6},
+        {"enemies": ["knh1", "knh1"], "delay":  3}
+      ],
+      "end_delay" : 3,
+      "end_message": []
+    }
+  ]
+}
