@@ -13,6 +13,7 @@ class UIFrame:
         self.font_ui1 = gfw.font.load(gobj.res('manaspc.ttf'),35)
         self.font_ui2 = gfw.font.load(gobj.res('manaspc.ttf'), 30)
         self.font_ui3 = gfw.font.load(gobj.res('manaspc.ttf'), 20)
+        self.font_ui4 = gfw.font.load(gobj.res('manaspc.ttf'), 40)
         self.font_message = gfw.font.load(gobj.res('Sam3KRFont.ttf'), 40)
         self.player = player
         self.display_life = player.life
@@ -25,7 +26,7 @@ class UIFrame:
         self.magazine_ui = ''
         self.tower_ui = ''
         self.repair_ui = ''
-        self.wave_ui = 1
+        self.wave_ui = 0
 
     def draw(self):
         image = self.image
@@ -34,6 +35,7 @@ class UIFrame:
         self.font_ui1.draw(100, 630, str(self.player.weapon.max_ammo), (255, 255, 255))
         self.font_ui2.draw(210, 680, str(self.display_life), (255, 255, 255))
         self.font_ui2.draw(210, 620, str(self.display_gold), (255, 255, 255))
+        self.font_ui4.draw(1120, 670, str(self.wave_ui), (255, 255, 255))
         draw_centered_text(self.font_ui3, self.ad_ui, 450, 580, 115, 20)
         draw_centered_text(self.font_ui3, self.magazine_ui, 611, 580, 115, 20)
         draw_centered_text(self.font_ui3, self.tower_ui, 777, 580, 115, 20)

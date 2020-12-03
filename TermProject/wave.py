@@ -37,6 +37,7 @@ class WaveControl:
         self.end_messages += self.wave_list[0]['end_messages']
         self.wave_list.pop(0)
         self.action = 'pre'
+        self.ui.wave_ui = self.wave
         pass
 
     def do_pre(self):
