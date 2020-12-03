@@ -5,6 +5,11 @@ import gfw
 RES_DIR = 'res'
 PIXEL_SCOPE = 4
 
+BGM_VOLUME = 10
+SE_VOLUME = 10
+DIFFICULTY = 2
+BACK_TO_TITLE = False
+
 def res(file):
     return RES_DIR + '/' + file
 

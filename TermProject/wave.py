@@ -10,8 +10,9 @@ class WaveControl:
     wave_list = []
     ACTIONS = ['open','pre', 'spawning', 'end', 'game_over']
     SG = SpawnerGenerator()
+    HP_MAG = [-0.2, 0, 0.2]
 
-    def __init__(self, ui):
+    def __init__(self, ui, difficulty):
         self.ui = ui
         self.wave = 0
         self.start_time = 0
@@ -22,6 +23,7 @@ class WaveControl:
         self.small_wave_time = 0
         self.action = 'open'
         self.is_end = False
+        self.difficulty = difficulty
 
         with open(gobj.res('wave.json')) as f:
             data = json.load(f)
@@ -51,11 +53,11 @@ class WaveControl:
     def generate_enemies(self, enemies):
         for e in enemies:
             if self.enemy_dict[e][0] == 1:
-                self.SG.spawn_knh_random(self.enemy_dict[e][1], self.enemy_dict[e][2])
+                self.SG.spawn_knh_random(self.enemy_dict[e][1], self.enemy_dict[e][2] + 60 * self.HP_MAG[self.difficulty - 1])
             if self.enemy_dict[e][0] == 2:
-                self.SG.spawn_krk_random(self.enemy_dict[e][1], self.enemy_dict[e][2])
+                self.SG.spawn_krk_random(self.enemy_dict[e][1], self.enemy_dict[e][2] + 140 * self.HP_MAG[self.difficulty - 1])
             if self.enemy_dict[e][0] == 3:
-                self.SG.spawn_nkm_random(self.enemy_dict[e][1], self.enemy_dict[e][2])
+                self.SG.spawn_nkm_random(self.enemy_dict[e][1], self.enemy_dict[e][2] + 90 * self.HP_MAG[self.difficulty - 1])
 
     def do_spawning(self):
         if self.small_wave_time <= 0:

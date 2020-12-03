@@ -8,17 +8,29 @@ from wave import WaveControl
 from wall import Wall
 import bullet
 import enemy
+import option_state
 
 from upgrade import UpgradeControl
 
 canvas_width = 1280
 canvas_height = 720
 
-def enter():
+def pause_world():
+    global world_tmp
+    world_tmp = gfw.world.objects
+    gobj.BACK_TO_TITLE = False
+
+def resume_world():
+    gfw.world.init(['bg', 'any', 'ui'])
+    gfw.world.objects = world_tmp
+    player.reset_delta()
+
+def build_world():
     gfw.world.init(['bg', 'any', 'ui'])
     Player.load_all_images()
     global player
     player = Player()
+    player.reset_delta()
     gfw.world.add(gfw.layer.any, player)
     bg = Background('Sprites/Backgrounds/stage1/spr_bkg_stage1.png')
     gfw.world.add(gfw.layer.bg, bg)
@@ -26,9 +38,12 @@ def enter():
     gfw.world.add(gfw.layer.ui, ui)
     generate_wall()
     global WC
-    WC = WaveControl(ui)
+    WC = WaveControl(ui, gobj.DIFFICULTY)
     global UC
     UC = UpgradeControl(ui, player)
+
+def enter():
+    build_world()
 
 def update():
     gfw.world.update()
@@ -83,10 +98,18 @@ def handle_event(e):
         gfw.quit()
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
-            gfw.pop()
+            gfw.push(option_state)
 
     player.handle_event(e)
     UC.handle_event(e)
+
+def pause():
+    pause_world()
+
+def resume():
+    resume_world()
+    if gobj.BACK_TO_TITLE:
+        gfw.pop()
 
 def exit():
     pass

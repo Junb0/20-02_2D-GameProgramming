@@ -251,6 +251,11 @@ class Player:
         self.body.handle_event(e)
         self.weapon.handle_event(e)
 
+    def reset_delta(self):
+        self.body.delta = 0, 0
+        self.weapon.state = 0, 0
+        self.weapon.delta = 0, 0
+
     @staticmethod
     def load_all_images():
         Body.load_all_images()

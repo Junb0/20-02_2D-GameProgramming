@@ -3,6 +3,7 @@ import gobj
 from pico2d import *
 from button import Button
 import ingame_state
+import option_state
 
 canvas_width = 1280
 canvas_height = 720
@@ -10,7 +11,10 @@ canvas_height = 720
 def start():
     gfw.push(ingame_state)
 
-def enter():
+def option():
+    gfw.push(option_state)
+
+def build_world():
     gfw.world.init(['bg', 'ui'])
     center = (canvas_width // 2, canvas_height // 2)
     bg = gobj.ImageObject('title.png', center)
@@ -20,6 +24,13 @@ def enter():
     l, b, w, h = 500, 250, get_canvas_width() - 1000, 80
     btn = Button(l, b, w, h, font, "Start", lambda: start())
     gfw.world.add(gfw.layer.ui, btn)
+
+    b -= 100
+    btn = Button(l, b, w, h, font, "Option", lambda: option())
+    gfw.world.add(gfw.layer.ui, btn)
+
+def enter():
+    build_world()
 
 def update():
     gfw.world.update()
@@ -54,7 +65,7 @@ def pause():
     pass
 
 def resume():
-    pass
+    build_world()
 
 def exit():
     pass
