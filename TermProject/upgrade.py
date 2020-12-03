@@ -100,12 +100,12 @@ class UpgradeControl:
             if self.tower_count == 3:
                 tmp = tower.Tower((200, 330), self.tower_attack_speed)
                 gfw.world.add(gfw.layer.any, tmp)
-            self.ui.tower_ui = '(+%d) %dG' % (self.tower_count, self.table_tower[self.tower_count][1])
             if self.tower_count == 4:
                 for t in gfw.world.objects_at(gfw.layer.any):
                     if isinstance(t, tower.Tower):
                         t.damage += 20
                 self.ui.messages2.append("Tower Attack Damage Increased!")
+            self.ui.tower_ui = '(+%d) %dG' % (self.tower_count, self.table_tower[self.tower_count][1])
             if self.tower_count >= len(self.table_tower) - 1:
                 self.ui.tower_ui = '(+%d) MAX' % self.tower_count
             self.ui.messages1.append('Upgrade Complete')
@@ -123,8 +123,11 @@ class UpgradeControl:
         elif self.player.gold >= self.table_repair[self.repair_count][1]:
             self.player.gold -= self.table_repair[self.repair_count][1]
             self.repair_count += 1
-            self.player.life = self.player.life + self.table_repair[self.repair_count][0]
+            self.player.life = clamp(0, self.player.life + self.table_repair[self.repair_count][0], 100)
             self.ui.messages1.append('Repair Complete')
+            self.ui.repair_ui = '%dG' % self.table_repair[self.repair_count][1]
+            if self.repair_count >= len(self.table_repair) - 1:
+                self.ui.repair_ui = 'MAX'
         else:
             if not 'Not Enough Gold' in self.ui.messages1:
                 self.ui.messages1.append('Not Enough Gold')

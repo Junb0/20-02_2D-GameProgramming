@@ -19,8 +19,8 @@ class UIFrame:
         self.display_gold = player.gold
         self.message_time1 = MESSAGE_TIME
         self.message_time2 = MESSAGE_TIME
-        self.messages1 = ['The next wave is coming soon.', '1234']
-        self.messages2 = ['hihi']
+        self.messages1 = []
+        self.messages2 = []
         self.ad_ui = ''
         self.magazine_ui = ''
         self.tower_ui = ''

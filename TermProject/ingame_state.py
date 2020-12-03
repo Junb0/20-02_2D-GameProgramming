@@ -4,7 +4,7 @@ import gobj
 from background import Background
 from player import Player
 from ui import UIFrame
-from spawner import SpawnerGenerator
+from wave import WaveControl
 from wall import Wall
 import bullet
 import enemy
@@ -25,15 +25,10 @@ def enter():
     ui = UIFrame(player)
     gfw.world.add(gfw.layer.ui, ui)
     generate_wall()
-    global SG
-    SG = SpawnerGenerator()
+    global WC
+    WC = WaveControl(ui)
     global UC
     UC = UpgradeControl(ui, player)
-
-    for _ in range(1):
-        SG.spawn_knh_random()
-        SG.spawn_krk_random()
-        SG.spawn_nkm_random()
 
 def update():
     gfw.world.update()
@@ -43,6 +38,7 @@ def update():
         if isinstance(e, enemy.Enemy):
             check_enemy(e)
     check_life()
+    WC.update()
 
 def check_enemy(e):
     for b in gfw.world.objects_at(gfw.layer.any):

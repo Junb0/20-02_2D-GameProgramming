@@ -148,7 +148,7 @@ class Enemy:
 
 class Knh(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 200, 'knh', 3 + add_damage, 60 + add_hp, 500, 1.0, KnhBullet,(-50, -30), 4 + random.randint(0, 2))
+        super().__init__(pos, (-1, 0), 130, 'knh', 3 + add_damage, 60 + add_hp, 400, 1.0, KnhBullet,(-50, -30), 4 + random.randint(0, 2))
 
     @staticmethod
     def load_all_images():
@@ -164,7 +164,7 @@ class Knh(Enemy):
 
 class Nkm(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 130, 'nkm', 6 + add_damage, 90 + add_hp, 600, 1.8, NkmBullet,(-50, -48), 7+ random.randint(0, 3), 2)
+        super().__init__(pos, (-1, 0), 110, 'nkm', 6 + add_damage, 90 + add_hp, 500, 1.8, NkmBullet,(-50, -48), 7+ random.randint(0, 3), 2)
 
     @staticmethod
     def load_all_images():
@@ -180,7 +180,7 @@ class Nkm(Enemy):
 
 class Krk(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 90, 'krk', 1 + add_damage, 140 + add_hp, 550, 4.0, KrkBullet,(-50, -70), 13 + random.randint(0, 5))
+        super().__init__(pos, (-1, 0), 80, 'krk', 1 + add_damage, 140 + add_hp, 450, 4.0, KrkBullet,(-50, -70), 13 + random.randint(0, 5))
 
     @staticmethod
     def load_all_images():
