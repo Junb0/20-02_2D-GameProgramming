@@ -1,6 +1,5 @@
 import gfw
 from pico2d import *
-from ext_pico2d import *
 import gobj
 from background import Background
 from player import Player
@@ -9,7 +8,7 @@ from spawner import SpawnerGenerator
 from wall import Wall
 import bullet
 import enemy
-import tower
+
 from upgrade import UpgradeControl
 
 canvas_width = 1280
