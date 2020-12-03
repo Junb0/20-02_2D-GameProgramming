@@ -1,7 +1,7 @@
 import gfw
 import gobj
 from pico2d import *
-import ingame_state
+import title_state
 
 canvas_width = 1280
 canvas_height = 720
@@ -15,7 +15,7 @@ def update():
     global elapsed
     elapsed += gfw.delta_time
     if elapsed > 1.0:
-        gfw.change(ingame_state)
+        gfw.change(title_state)
 
 def draw():
     image.draw(canvas_width // 2, canvas_height // 2)
@@ -25,6 +25,13 @@ def handle_event(e):
         gfw.quit()
     elif (e.type, e.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
         gfw.quit()
+
+def pause():
+    pass
+
+def resume():
+    pass
+
 def exit():
     global image
     del image

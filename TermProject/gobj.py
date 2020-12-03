@@ -45,6 +45,19 @@ def draw_collision_box():
         if hasattr(obj, 'get_ground'):
             draw_rectangle(*obj.get_ground())
 
+def mouse_xy(event):
+    return event.x, get_canvas_height() - event.y - 1
+
+def pt_in_rect(point, rect):
+    (x, y) = point
+    (l, b, r, t) = rect
+
+    if x < l: return False
+    if x > r: return False
+    if y < b: return False
+    if y > t: return False
+
+    return True
 
 class ImageObject:
     def __init__(self, imageName, pos):
