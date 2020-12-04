@@ -5,7 +5,6 @@ from gobj import *
 LBTN_DOWN = (SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT)
 LBTN_UP = (SDL_MOUSEBUTTONUP, SDL_BUTTON_LEFT)
 
-
 class BtnBg:
     def __init__(self, image):
         self.image = gfw.image.load(image)

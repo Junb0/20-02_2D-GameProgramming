@@ -4,6 +4,7 @@ from pico2d import *
 from button import Button
 import ingame_state
 import option_state
+import sound
 
 canvas_width = 1280
 canvas_height = 720
@@ -13,6 +14,14 @@ def start():
 
 def option():
     gfw.push(option_state)
+
+def pause_world():
+    global world_tmp
+    world_tmp = gfw.world.objects
+
+def resume_world():
+    gfw.world.init(['bg', 'ui'])
+    gfw.world.objects = world_tmp
 
 def build_world():
     gfw.world.init(['bg', 'ui'])
@@ -28,6 +37,8 @@ def build_world():
     b -= 100
     btn = Button(l, b, w, h, font, "Option", lambda: option())
     gfw.world.add(gfw.layer.ui, btn)
+    sound.init()
+    sound.bgm_title.repeat_play()
 
 def enter():
     build_world()
@@ -62,13 +73,13 @@ def handle_mouse(e):
             return True
 
 def pause():
-    pass
+    pause_world()
 
 def resume():
-    build_world()
+    resume_world()
 
 def exit():
-    pass
+    sound.delete_sounds()
 
 if __name__ == '__main__':
     gfw.run_main()

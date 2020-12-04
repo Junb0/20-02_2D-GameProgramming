@@ -3,9 +3,12 @@ import gobj
 from pico2d import *
 from ext_pico2d import *
 from button import Button
+import sound
 
 canvas_width = 1280
 canvas_height = 720
+
+DIFFICULTY_STR_LIST = ['Easy', 'Normal', 'Hard']
 
 def bgm_volume_down():
     gobj.BGM_VOLUME = clamp(0, gobj.BGM_VOLUME - 1, 10)
@@ -82,7 +85,7 @@ def draw():
     draw_centered_text(font, 'SE Volume', 0, 270, get_canvas_width(), 80)
     draw_centered_text(font, str(gobj.SE_VOLUME), 0, 200, get_canvas_width(), 80)
     draw_centered_text(font, 'Difficulty', 0, 120, get_canvas_width(), 80)
-    draw_centered_text(font, str(gobj.DIFFICULTY), 0, 50, get_canvas_width(), 80)
+    draw_centered_text(font, str(DIFFICULTY_STR_LIST[gobj.DIFFICULTY - 1]), 0, 50, get_canvas_width(), 80)
 
 
 def handle_event(e):

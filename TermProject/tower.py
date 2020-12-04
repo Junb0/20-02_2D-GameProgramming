@@ -3,7 +3,7 @@ import gfw
 from pico2d import *
 import enemy
 from bullet import ShortBullet
-
+import sound
 
 class Tower:
     ACTIONS = ['idle', 'attack']
@@ -67,6 +67,7 @@ class Tower:
         if self.attack_cooltime <= 0 and self.fidx == 4:
             self.generate_bullet()
             self.attack_cooltime = self.attack_delay
+            sound.se_player_fire.play()
         self.time += gfw.delta_time
         self.attack_cooltime -= gfw.delta_time
         self.fidx = round(self.time * Tower.FPS)

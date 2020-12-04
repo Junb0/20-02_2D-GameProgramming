@@ -3,6 +3,7 @@ import gfw
 import gobj
 import enemy
 import random
+import sound
 
 class EnemySpawner:
     image = None
@@ -16,6 +17,7 @@ class EnemySpawner:
         self.image = gfw.image.load(gobj.RES_DIR + '/Sprites/enemies/spawn.png')
         self.fidx = 0
         self.time = 0
+        sound.se_spawn_enemy.play()
 
     def draw(self):
         width, height = 48, 48
@@ -33,6 +35,7 @@ class EnemySpawner:
     def spawn_enemy(self):
         tmp = self.enemy_class(self.pos, self.add_damage, self.add_hp)
         gfw.world.add(gfw.layer.any, tmp)
+        sound.se_generate_enemy.play()
 
     def remove(self):
         gfw.world.remove(self)

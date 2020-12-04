@@ -3,7 +3,7 @@ from ext_pico2d import *
 import gfw
 import gobj
 
-MESSAGE_TIME = 2
+MESSAGE_TIME = 1
 
 class UIFrame:
     image = None
@@ -18,6 +18,7 @@ class UIFrame:
         self.player = player
         self.display_life = player.life
         self.display_gold = player.gold
+        self.display_score = gobj.SCORE
         self.message_time1 = MESSAGE_TIME
         self.message_time2 = MESSAGE_TIME
         self.messages1 = []
@@ -36,11 +37,11 @@ class UIFrame:
         self.font_ui2.draw(210, 680, str(self.display_life), (255, 255, 255))
         self.font_ui2.draw(210, 620, str(self.display_gold), (255, 255, 255))
         self.font_ui4.draw(1120, 670, str(self.wave_ui), (255, 255, 255))
+        self.font_ui3.draw(1095, 620, 'score : ' + str(self.display_score).zfill(6), (255, 255, 255))
         draw_centered_text(self.font_ui3, self.ad_ui, 450, 580, 115, 20)
         draw_centered_text(self.font_ui3, self.magazine_ui, 611, 580, 115, 20)
         draw_centered_text(self.font_ui3, self.tower_ui, 777, 580, 115, 20)
         draw_centered_text(self.font_ui3, self.repair_ui, 937, 580, 115, 20)
-
 
         if len(self.messages1):
             draw_centered_text(self.font_message, self.messages1[0], 0, 530, 1280, 40)
@@ -57,6 +58,11 @@ class UIFrame:
             self.display_gold += 1
         elif self.display_gold > self.player.gold:
             self.display_gold -= 1
+
+        if self.display_score < gobj.SCORE:
+            self.display_score += 1
+        elif self.display_score > gobj.SCORE:
+            self.display_score -= 1
 
         if self.message_time1 > 0 and len(self.messages1):
             self.message_time1 -= gfw.delta_time

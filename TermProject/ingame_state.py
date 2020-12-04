@@ -9,8 +9,9 @@ from wall import Wall
 import bullet
 import enemy
 import option_state
-
+import result_state
 from upgrade import UpgradeControl
+import sound
 
 canvas_width = 1280
 canvas_height = 720
@@ -26,6 +27,11 @@ def resume_world():
     player.reset_delta()
 
 def build_world():
+    gobj.IS_VICTORY = False
+    gobj.SCORE = 0
+    gobj.KILLED_ENEMY = 0
+    gobj.PICKED_GOLD = 0
+    gobj.CONSUMED_GOLD = 0
     gfw.world.init(['bg', 'any', 'ui'])
     Player.load_all_images()
     global player
@@ -41,9 +47,14 @@ def build_world():
     WC = WaveControl(ui, gobj.DIFFICULTY)
     global UC
     UC = UpgradeControl(ui, player)
+    sound.init()
+    sound.bgm_ingame.repeat_play()
 
 def enter():
     build_world()
+
+def end_game():
+    gfw.change(result_state)
 
 def update():
     gfw.world.update()
@@ -54,6 +65,8 @@ def update():
             check_enemy(e)
     check_life()
     WC.update()
+    if WC.is_end or player.life <= 0:
+        end_game()
 
 def check_enemy(e):
     for b in gfw.world.objects_at(gfw.layer.any):
@@ -63,8 +76,13 @@ def check_enemy(e):
                 print(b.damage)
                 b.action = 'hit'
                 b.time = 0
+                sound.se_enemy_hit.play()
                 if die:
                     player.gold += e.drop_gold
+                    gobj.KILLED_ENEMY += 1
+                    gobj.PICKED_GOLD += e.drop_gold
+                    gobj.SCORE += e.drop_score
+                    sound.se_enemy_die.play()
 
 def check_life():
     for b in gfw.world.objects_at(gfw.layer.any):
@@ -73,6 +91,7 @@ def check_life():
                 b.action = 'hit'
                 b.time = 0
                 player.life -= b.damage
+                sound.se_enemy_bullet_hit.play()
 
 def generate_wall():
     wall1 = Wall((10, 70))
@@ -99,7 +118,6 @@ def handle_event(e):
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
             gfw.push(option_state)
-
     player.handle_event(e)
     UC.handle_event(e)
 
@@ -110,6 +128,7 @@ def resume():
     resume_world()
     if gobj.BACK_TO_TITLE:
         gfw.pop()
+        sound.bgm_title.repeat_play()
 
 def exit():
     pass

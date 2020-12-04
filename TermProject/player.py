@@ -3,6 +3,7 @@ import gfw
 from pico2d import *
 from bullet import LongBullet
 from bullet import ShortBullet
+import sound
 
 class Body:
     KEY_MAP = {
@@ -186,6 +187,7 @@ class Weapon(Body):
             print(self.action)
             self.reload_time = 0
             self.reload_cool_time = self.reload_delay
+            sound.se_player_reload.play()
         elif self.reload_time != 0:
             self.action = 'reload'
         elif self.on_fire == 1 and self.fire_cool_time <= 0 and self.ammo > 0 and self.reload_cool_time <= 0: # 다른 상태에서 처음 fire 상태로 변경
@@ -196,6 +198,7 @@ class Weapon(Body):
             # 총알 생성
             self.generate_bullet()
             self.ammo -= 1
+            sound.se_player_fire.play()
             print('ammo : ', self.ammo)
         elif self.fire_time != 0: # fire 애니메이션 진행도중
             self.action = 'fire'

@@ -4,6 +4,7 @@ import gfw
 import gobj
 import json
 from spawner import SpawnerGenerator
+import enemy
 
 class WaveControl:
     enemy_dict = {}
@@ -23,6 +24,7 @@ class WaveControl:
         self.small_wave_time = 0
         self.action = 'open'
         self.is_end = False
+        self.game_over_time = 3
         self.difficulty = difficulty
 
         with open(gobj.res('wave.json')) as f:
@@ -78,6 +80,19 @@ class WaveControl:
                 self.action = 'open'
             else:
                 self.action = 'game_over'
+                self.ui.messages2.append('All Waves Complete!')
+
+    def do_game_over(self):
+        cnt = 0
+        for e in gfw.world.objects_at(gfw.layer.any):
+            if isinstance(e, enemy.Enemy):
+                cnt += 1
+        if cnt == 0:
+            if self.game_over_time <= 0:
+                self.is_end = True
+                gobj.IS_VICTORY = True
+            else:
+                self.game_over_time -= gfw.delta_time
 
     def update(self):
         if self.action == 'open':
@@ -88,4 +103,6 @@ class WaveControl:
             self.do_spawning()
         if self.action == 'end':
             self.do_end()
+        if self.action == 'game_over':
+            self.do_game_over()
 

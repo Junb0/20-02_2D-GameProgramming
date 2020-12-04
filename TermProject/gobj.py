@@ -10,6 +10,12 @@ SE_VOLUME = 10
 DIFFICULTY = 2
 BACK_TO_TITLE = False
 
+IS_VICTORY = False
+SCORE = 0
+KILLED_ENEMY = 0
+PICKED_GOLD = 0
+CONSUMED_GOLD = 0
+
 def res(file):
     return RES_DIR + '/' + file
 

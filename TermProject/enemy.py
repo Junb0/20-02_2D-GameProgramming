@@ -5,13 +5,14 @@ from bullet import KnhBullet
 from bullet import NkmBullet
 from bullet import KrkBullet
 import random
+import sound
 
 class Enemy:
     ACTIONS = ['attack', 'hit', 'idle', 'walk', 'die']
     images = {}
     FPS = 12
 
-    def __init__(self, pos, delta, speed, char, damage, hp, attack_range, attack_delay, bullet, fire_point, drop_gold,attack_timing = 0):
+    def __init__(self, pos, delta, speed, char, damage, hp, attack_range, attack_delay, bullet, fire_point, drop_gold, drop_score, attack_timing = 0):
         self.pos = pos
         self.delta = delta
         self.speed = speed
@@ -31,6 +32,7 @@ class Enemy:
         self.stun = 0
         self.attack_timing = attack_timing
         self.drop_gold = drop_gold
+        self.drop_score = drop_score
 
     @staticmethod
     def load_images(char):
@@ -80,6 +82,7 @@ class Enemy:
         if self.attack_cooltime <= 0 and self.fidx == self.attack_timing:
             self.generate_bullet()
             self.attack_cooltime = self.attack_delay
+            sound.se_enemy_attack.play()
 
         self.time += gfw.delta_time
         self.attack_cooltime -= gfw.delta_time
@@ -148,7 +151,7 @@ class Enemy:
 
 class Knh(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 130, 'knh', 3 + add_damage, 60 + add_hp, 400, 1.0, KnhBullet,(-50, -30), 4 + random.randint(0, 2))
+        super().__init__(pos, (-1, 0), 130, 'knh', 3 + add_damage, 60 + add_hp, 400, 1.0, KnhBullet,(-50, -30), 4 + random.randint(0, 2), 50)
 
     @staticmethod
     def load_all_images():
@@ -164,7 +167,7 @@ class Knh(Enemy):
 
 class Nkm(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 110, 'nkm', 6 + add_damage, 90 + add_hp, 500, 1.8, NkmBullet,(-50, -48), 7+ random.randint(0, 3), 2)
+        super().__init__(pos, (-1, 0), 110, 'nkm', 6 + add_damage, 90 + add_hp, 500, 1.8, NkmBullet,(-50, -48), 7+ random.randint(0, 3), 90 ,2)
 
     @staticmethod
     def load_all_images():
@@ -180,7 +183,7 @@ class Nkm(Enemy):
 
 class Krk(Enemy):
     def __init__(self, pos, add_damage, add_hp):
-        super().__init__(pos, (-1, 0), 80, 'krk', 1 + add_damage, 140 + add_hp, 450, 4.0, KrkBullet,(-50, -70), 13 + random.randint(0, 5))
+        super().__init__(pos, (-1, 0), 80, 'krk', 1 + add_damage, 140 + add_hp, 450, 4.0, KrkBullet,(-50, -70), 13 + random.randint(0, 5), 160)
 
     @staticmethod
     def load_all_images():
