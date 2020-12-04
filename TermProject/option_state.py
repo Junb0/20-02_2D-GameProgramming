@@ -12,15 +12,19 @@ DIFFICULTY_STR_LIST = ['Easy', 'Normal', 'Hard']
 
 def bgm_volume_down():
     gobj.BGM_VOLUME = clamp(0, gobj.BGM_VOLUME - 1, 10)
+    sound.update_volume()
 
 def bgm_volume_up():
     gobj.BGM_VOLUME = clamp(0, gobj.BGM_VOLUME + 1, 10)
+    sound.update_volume()
 
 def se_volume_down():
     gobj.SE_VOLUME = clamp(0, gobj.SE_VOLUME - 1, 10)
+    sound.update_volume()
 
 def se_volume_up():
     gobj.SE_VOLUME = clamp(0, gobj.SE_VOLUME + 1, 10)
+    sound.update_volume()
 
 def difficulty_down():
     gobj.DIFFICULTY = clamp(1, gobj.DIFFICULTY - 1, 3)

@@ -42,3 +42,23 @@ def delete_sounds():
     del bgm_ingame
     del bgm_title
     print("delete sounds")
+
+def update_volume():
+    global bgm_ingame, bgm_title, se_player_fire, se_enemy_hit, se_enemy_die, se_player_reload
+    global se_upgrade_success, se_upgrade_fail, se_upgrade_bonus, se_spawn_enemy, se_victory, se_defeat
+    global se_enemy_attack, se_enemy_bullet_hit, se_generate_enemy
+    bgm_ingame.set_volume(round(10 * gobj.BGM_VOLUME))
+    bgm_title.set_volume(round(10 * gobj.BGM_VOLUME))
+    se_player_fire.set_volume(round(3 * gobj.SE_VOLUME))
+    se_enemy_hit.set_volume(round(3 * gobj.SE_VOLUME))
+    se_enemy_die.set_volume(round(3 * gobj.SE_VOLUME))
+    se_player_reload.set_volume(round(3 * gobj.SE_VOLUME))
+    se_upgrade_success.set_volume(round(3 * gobj.SE_VOLUME))
+    se_upgrade_fail.set_volume(round(2 * gobj.SE_VOLUME))
+    se_upgrade_bonus.set_volume(round(3 * gobj.SE_VOLUME))
+    se_spawn_enemy.set_volume(round(2 * gobj.SE_VOLUME))
+    se_victory.set_volume(round(3 * gobj.SE_VOLUME))
+    se_defeat.set_volume(round(3 * gobj.SE_VOLUME))
+    se_enemy_attack.set_volume(round(3 * gobj.SE_VOLUME))
+    se_enemy_bullet_hit.set_volume(round(1 * gobj.SE_VOLUME))
+    se_generate_enemy.set_volume(round(8 * gobj.SE_VOLUME))
