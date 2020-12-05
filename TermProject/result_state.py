@@ -8,6 +8,8 @@ import sound
 canvas_width = 1280
 canvas_height = 720
 
+DIFFICULTY_TABLE = ['EASY', "NORMAL", "HARD"]
+
 def back_to_title():
     gfw.pop()
     sound.bgm_title.repeat_play()
@@ -25,8 +27,6 @@ def enter():
     gfw.world.add(gfw.layer.bg, bg)
 
     global font
-    font = gfw.font.load(gobj.res('Sam3KRFont.ttf'), 40)
-    global font2
     font = gfw.font.load(gobj.res('Sam3KRFont.ttf'), 35)
     global l, b, w, h
     l,b,w,h = 50,100,get_canvas_width()-100,80
@@ -40,10 +40,12 @@ def draw():
     gfw.world.draw()
     if gobj.IS_VICTORY:
         draw_centered_text(font, 'score : ' + str(gobj.SCORE), 0, 420, get_canvas_width(), 80)
-        draw_centered_text(font, 'kills : ' + str(gobj.KILLED_ENEMY), 0, 360, get_canvas_width(), 80)
-        draw_centered_text(font, 'total gold : ' + str(gobj.PICKED_GOLD), 0, 300, get_canvas_width(), 80)
-        draw_centered_text(font, 'used gold : ' + str(gobj.CONSUMED_GOLD), 0, 240, get_canvas_width(), 80)
-
+        draw_centered_text(font, 'kills : ' + str(gobj.KILLED_ENEMY), 0, 380, get_canvas_width(), 80)
+        draw_centered_text(font, 'total gold : ' + str(gobj.PICKED_GOLD), 0, 340, get_canvas_width(), 80)
+        draw_centered_text(font, 'used gold : ' + str(gobj.CONSUMED_GOLD), 0, 300, get_canvas_width(), 80)
+        draw_centered_text(font, 'difficulty : ' + DIFFICULTY_TABLE[gobj.DIFFICULTY_NOW - 1], 0, 260, get_canvas_width(),80)
+        draw_centered_text(font, 'gold bonus : ' + str(gobj.BONUS_SCORE), 0, 220, get_canvas_width(), 80)
+        draw_centered_text(font, 'total score : ' + str(gobj.SCORE + gobj.BONUS_SCORE), 0, 180, get_canvas_width(), 80)
 def handle_event(e):
     if e.type == SDL_QUIT:
         gfw.quit()

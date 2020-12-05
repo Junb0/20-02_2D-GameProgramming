@@ -10,9 +10,9 @@ class Tower:
     images = {}
     FPS = 12
 
-    def __init__(self, pos, attack_delay = 4, add_damage = 0):
+    def __init__(self, pos, attack_delay = 3.5, damage = 20):
         self.pos = pos
-        self.damage = 20 + add_damage
+        self.damage = damage
         self.attack_delay = attack_delay
         self.attack_cooltime = 0
         self.time = 0
@@ -60,7 +60,7 @@ class Tower:
             self.fidx = round(self.time * Tower.FPS)
 
     def generate_bullet(self):
-        blt = ShortBullet((self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE), self.damage, 1.0)
+        blt = ShortBullet((self.pos[0] + 18 * gobj.PIXEL_SCOPE, self.pos[1] - 5 * gobj.PIXEL_SCOPE), self.damage, 0.5)
         gfw.world.add(gfw.layer.any, blt)
 
     def do_attack(self):

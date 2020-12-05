@@ -11,7 +11,7 @@ class WaveControl:
     wave_list = []
     ACTIONS = ['open','pre', 'spawning', 'end', 'game_over']
     SG = SpawnerGenerator()
-    HP_MAG = [-0.2, 0, 0.2]
+    HP_MAG = [-0.2, 0, 0.12]
 
     def __init__(self, ui, difficulty):
         self.ui = ui

@@ -32,6 +32,7 @@ def build_world():
     gobj.KILLED_ENEMY = 0
     gobj.PICKED_GOLD = 0
     gobj.CONSUMED_GOLD = 0
+    gobj.DIFFICULTY_NOW = gobj.DIFFICULTY
     gfw.world.init(['bg', 'any', 'ui'])
     Player.load_all_images()
     global player
@@ -54,6 +55,7 @@ def enter():
     build_world()
 
 def end_game():
+    gobj.BONUS_SCORE = player.gold * 5
     gfw.change(result_state)
 
 def update():
@@ -78,9 +80,9 @@ def check_enemy(e):
                 b.time = 0
                 sound.se_enemy_hit.play()
                 if die:
-                    player.gold += e.drop_gold
+                    player.gold += round(e.drop_gold * player.gold_mag)
                     gobj.KILLED_ENEMY += 1
-                    gobj.PICKED_GOLD += e.drop_gold
+                    gobj.PICKED_GOLD += round(e.drop_gold * player.gold_mag)
                     gobj.SCORE += e.drop_score
                     sound.se_enemy_die.play()
 

@@ -17,8 +17,8 @@
         {"enemies": ["knh1"], "delay":  4},
         {"enemies": ["knh1", "knh1"], "delay":  8}
       ],
-      "end_delay" : 3,
-      "end_messages": ["Wave Completed"]
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
     },
 
     {
@@ -31,8 +31,8 @@
         {"enemies": ["knh1"], "delay":  4},
         {"enemies": ["nkm1"], "delay":  8}
       ],
-      "end_delay" : 3,
-      "end_messages": ["Wave Completed"]
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
     },
 
     {
@@ -40,11 +40,127 @@
       "start_messages" : ["The Next Wave is Coming Soon"],
       "small_waves": [
         {"enemies": ["knh1", "knh1"], "delay":  8},
-        {"enemies": ["krk1"], "delay":  14},
-        {"enemies": ["knh1", "knh1"], "delay":  8}
+        {"enemies": ["krk1", "knh1"], "delay":  6},
+        {"enemies": ["knh1", "knh1"], "delay":  6},
+        {"enemies": ["knh1", "nkm1", "knh1"], "delay":  4}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon"],
+      "small_waves": [
+        {"enemies": ["nkm1", "knh1"], "delay":  8},
+        {"enemies": ["nkm1"], "delay":  8},
+        {"enemies": ["knh1", "knh1", "knh1"], "delay":  5},
+        {"enemies": ["krk1"], "delay":  3},
+        {"enemies": ["nkm1", "knh1"], "delay":  6}
       ],
       "end_delay" : 3,
-      "end_messages": ["Wave Completed"]
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon", "Some enemies become stronger."],
+      "small_waves": [
+        {"enemies": ["knh2", "knh1", "knh1"], "delay":  6},
+        {"enemies": ["knh2", "knh1", "nkm1"], "delay":  8},
+        {"enemies": ["krk1", "knh1"], "delay":  4},
+        {"enemies": ["nkm1", "knh1"], "delay":  6},
+        {"enemies": ["krk1", "krk1"], "delay":  4},
+        {"enemies": ["knh2", "knh1"], "delay":  10}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon"],
+      "small_waves": [
+        {"enemies": ["knh2", "knh2", "knh2", "nkm1"], "delay":  6},
+        {"enemies": ["knh2", "nkm2", "knh2"], "delay":  8},
+        {"enemies": ["krk1", "krk1"], "delay":  4},
+        {"enemies": ["nkm2", "knh2"], "delay":  6},
+        {"enemies": ["krk1", "krk1", "nkm1"], "delay":  5},
+        {"enemies": ["knh2", "knh1"], "delay":  10}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon"],
+      "small_waves": [
+        {"enemies": ["knh2", "knh2", "nkm2", "nkm2"], "delay":  6},
+        {"enemies": ["knh2", "nkm2", "knh2"], "delay":  8},
+        {"enemies": ["krk2", "nkm2", "knh1"], "delay":  8},
+        {"enemies": ["nkm2", "knh2", "knh2", "knh2"], "delay":  8},
+        {"enemies": ["krk1", "krk2", "nkm1"], "delay":  4},
+        {"enemies": ["knh2", "knh1", "knh2"], "delay":  4}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon", "Some enemies become stronger."],
+      "small_waves": [
+        {"enemies": ["knh2", "nkm2", "nkm2", "nkm2", "knh2", "knh2"], "delay":  4},
+        {"enemies": ["krk2", "krk2", "knh2"], "delay":  8},
+        {"enemies": ["krk2", "nkm2", "knh2"], "delay":  8},
+        {"enemies": ["nkm2", "knh2", "knh2", "knh2"], "delay":  4},
+        {"enemies": ["krk2", "krk2", "nkm2"], "delay":  6},
+        {"enemies": ["knh2", "knh2", "nkm2", "krk2"], "delay":  10}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon"],
+      "small_waves": [
+        {"enemies": ["krk2", "krk2", "krk2", "nkm2", "nkm2", "knh2"], "delay":  8},
+        {"enemies": ["krk2", "krk2", "nkm2", "knh2"], "delay":  8},
+        {"enemies": ["krk2", "nkm2", "knh2", "knh2"], "delay":  8},
+        {"enemies": ["nkm2", "knh2", "knh2", "knh2", "knh2", "knh2"], "delay":  6},
+        {"enemies": ["krk2", "krk2", "nkm2"], "delay":  6},
+        {"enemies": ["knh2", "knh2", "nkm2", "krk2"], "delay":  10}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
+    },
+
+    {
+      "start_delay" : 3,
+      "start_messages" : ["The Next Wave is Coming Soon"],
+      "small_waves": [
+        {"enemies": ["krk2", "krk2", "krk2", "nkm2", "nkm2", "knh2"], "delay":  4},
+        {"enemies": ["krk2", "krk2", "krk2", "knh2", "nkm2", "nkm2"], "delay":  6},
+        {"enemies": ["krk2", "nkm2", "knh2", "knh2", "knh2", "knh2"], "delay":  6},
+        {"enemies": ["nkm2", "knh2", "knh2", "knh2", "knh2", "knh2"], "delay":  4},
+        {"enemies": ["krk2", "krk2", "nkm2"], "delay":  4},
+        {"enemies": ["knh2", "knh2", "nkm2", "krk2"], "delay":  6},
+        {"enemies": ["knh2", "krk2", "krk2", "krk2", "nkm2"], "delay":  4},
+        {"enemies": ["knh2", "krk2", "krk2", "nkm2", "nkm2", "knh2", "knh2"], "delay":  3},
+        {"enemies": ["krk2", "knh2"], "delay":  1},
+        {"enemies": ["knh2", "knh2"], "delay":  1},
+        {"enemies": ["nkm2", "krk2"], "delay":  1},
+        {"enemies": ["krk2", "krk2"], "delay":  1},
+        {"enemies": ["krk2", "knh2"], "delay":  1},
+        {"enemies": ["krk2", "knh2", "knh2"], "delay":  0.5},
+        {"enemies": ["krk2"], "delay":  0.5},
+        {"enemies": ["knh2"], "delay":  0.5},
+        {"enemies": ["nkm2", "knh2"], "delay":  0.5}
+      ],
+      "end_delay" : 5,
+      "end_messages": ["Wave Complete"]
     }
   ]
 }
