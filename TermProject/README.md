@@ -309,3 +309,10 @@ winAPI 기반으로 제작했던 게임이었는데, api특성과 짧은 개발�
 
 
 
+# 발표 동영상 링크
+
+1차 발표 : https://youtu.be/TOXVylcWYkk
+
+2차 발표 : https://youtu.be/OiKccU0-0Ys
+
+최종 발표 : https://youtu.be/PQnJA3ZdoZE
